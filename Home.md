@@ -1,1 +1,1 @@
-Welcome to the foundationdb wiki!
+Welcome to the FoundationDB wiki!
