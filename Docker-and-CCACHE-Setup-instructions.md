@@ -73,7 +73,7 @@ You can now run it like this:
 ssync.sh -H <IP of the dev vm> -l <PATH to local fdb source> -r <PATH to the fdb source on dev vm>
 ```
 
-Do make sure that ```sshd``` is running on the dev vm. If not you can do: 
+Do make sure that `sshd` is running on the dev vm. If not you can do: 
 ```
 sudo systemctl enable sshd
 sudo systemctl start sshd
@@ -142,6 +142,14 @@ To start the container, edit the following command to your liking and execute it
 ```
 sudo docker run --rm -it -m 50g --privileged=true --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -v '/home:/home' -v '/shared:/shared' -u "$UID:$UID" '-e' "LOGNAME=$(whoami)" '-e' "CCACHE_DIR=$CCACHE_DIR" '-e' "CCACHE_UMASK=$CCACHE_UMASK" '-e' 'USER=$(whoami)'  -e "HOME=$HOME" --group-add=1003 fdb-build
 ```
+
+If you didn't configure CCACHE, you can omit the CCACHE related flags from the above command. So the command would look like this in the absence of CCACHE:
+
+```
+sudo docker run --rm -it -m 50g --privileged=true --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -v '/home:/home' -v '/shared:/shared' -u "$UID:$UID" '-e' "LOGNAME=$(whoami)" '-e' 'USER=$(whoami)'  -e "HOME=$HOME" fdb-build
+```
+
+Also the last parameter `fdb-build` refers to the the name of docker image. If you are going to be using the published docker image, then change it to `foundationdb/foundationdb-build:latest`
 
 The parameter `-m 50g` will limit the memory usage of the container to 50 GiB. If your machine has less memory, you might want to set this to something smaller.
 
