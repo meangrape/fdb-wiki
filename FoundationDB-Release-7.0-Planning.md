@@ -1,4 +1,4 @@
-*Planned Features in 7.0*
+# *Planned Features in 7.0*
 
 *Scaling* - (A.J.) - Larger clusters will make adding additional hardware easier, and will make it easier to balance users across partitions. Larger clusters also enables transactions across more data. This feature is also extremely important for external adoption, because it means a lot of use cases can fit entirely in a single cluster.
 
@@ -32,7 +32,7 @@
 
 *Support processes changing IP addresses* - (Bhaskar?) - Kubernetes does not guarantee that a process will have the same IP address after a reboot. By changing exclude to be locality based, and by changing cluster files to support DNS addresses, we can make FoundationDB more friendly for Kubernetes users.
 
-*Notable features which will not be in 7.0*
+# *Notable features which will not be in 7.0*
 
 *Satellite anti-quorums* - FoundationDB synchronously commits to the satellites TLogs with every commit. This makes tail latencies dependent on the WAN network between the main DC and the satellite location. By supporting anti-quorums on the satellites, we can submit mutation to two different satellites, and return success when one of the two responds.
 
