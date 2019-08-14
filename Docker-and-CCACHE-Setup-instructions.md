@@ -64,7 +64,10 @@ do
 done
 ```
 
-You can run it then like this: ```ssync.sh -H <IP of the dev vm> -l <PATH to local fdb repo> -r <PATH to the fdb source on dev vm>```
+You can run it like this: 
+```
+ssync.sh -H <IP of the dev vm> -l <PATH to local fdb source> -r <PATH to the fdb source on dev vm>
+```
 
 Do make sure that ```sshd``` is running on the dev vm. If not you can do: 
 ```
