@@ -64,6 +64,12 @@ do
 done
 ```
 
+You can run it then like this: ```ssync.sh -H <IP of the dev vm> -l <PATH to local fdb repo> -r <PATH to the fdb source on dev vm>```
+
+Do make sure that ```sshd``` is running on the dev vm. If not you can do: 
+```sudo systemctl enable sshd
+sudo systemctl start sshd```
+
 For this to work you need to first install [fsevent-tools](https://github.com/ggreer/fsevents-tools) which you can install through [Homebrew](https://brew.sh).
 
 These instructions assume that your source directory is under `~/foundationdb`.
