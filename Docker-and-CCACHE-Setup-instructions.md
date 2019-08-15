@@ -140,7 +140,23 @@ In this example, we assume the gid is 1003.
 To start the container, edit the following command to your liking and execute it:
 
 ```
-sudo docker run --rm -it -m 50g --privileged=true --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -v '/home:/home' -v '/shared:/shared' -u "$UID:$UID" '-e' "LOGNAME=$(whoami)" '-e' "CCACHE_DIR=$CCACHE_DIR" '-e' "CCACHE_UMASK=$CCACHE_UMASK" '-e' 'USER=$(whoami)'  -e "HOME=$HOME" --group-add=1003 fdb-build
+sudo docker run --rm `# delete (temporary) image after return` \
+                -it `# Run in interactive mode and simulate a TTY` \
+                -m 50g `# Limit memory usage to 50GiB` \
+                --privileged=true `# Run in privileged mode ` \
+                --cap-add=SYS_PTRACE \
+                --security-opt seccomp=unconfined \
+                -v '/home:/home' `# Mount home directory` \ 
+                -v '/shared:/shared' `# Mount /shared - can be ignored if you don't use ccache or have your ccache in your home directory` \
+                -u "$UID:$UID" `# Use your uid in the docker container - this makes sure created files are owned by the current user`\
+                `# The next few arguments set some environment variables within the docker container` \
+                -e "LOGNAME=$(whoami)" \
+                -e "CCACHE_DIR=$CCACHE_DIR" \
+                -e "CCACHE_UMASK=$CCACHE_UMASK" \
+                -e 'USER=$(whoami)' \
+                -e "HOME=$HOME" \
+                --group-add=1003 `# Add Group with guid 1003 - you can ignore this if you don't share ccache` \
+                fdb-build `# Name of the image`
 ```
 
 If you didn't configure CCACHE, you can omit the CCACHE related flags from the above command. So the command would look like this in the absence of CCACHE:
