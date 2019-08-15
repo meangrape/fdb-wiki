@@ -73,7 +73,7 @@ You can now run it like this:
 ssync.sh -H <IP of the dev vm> -l <PATH to local fdb source> -r <PATH to the fdb source on dev vm>
 ```
 
-Do make sure that `sshd` is running on the dev vm. If not you can do: 
+Do make sure that `sshd` is running on the dev vm. If not you can do (on Fedora): 
 ```
 sudo systemctl enable sshd
 sudo systemctl start sshd
