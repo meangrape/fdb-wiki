@@ -32,6 +32,8 @@
 
 *Support processes changing IP addresses* - (Bhaskar?) - Kubernetes does not guarantee that a process will have the same IP address after a reboot. By changing exclude to be locality based, and by changing cluster files to support DNS addresses, we can make FoundationDB more friendly for Kubernetes users.
 
+*Downgrade simulation testing* - FDB 6.1 introduced a forward compatibility framework to allow users to downgrade their cluster after an upgrade.  However, no tests exist that enforce or verify that downgrades work and are correct, and thus this support was never documented.  Adding downgrades to restarting tests will allow us to offer official guidance of when and how downgrades are supported.
+
 # *Notable features which will not be in 7.0*
 
 *Satellite anti-quorums* - FoundationDB synchronously commits to the satellites TLogs with every commit. This makes tail latencies dependent on the WAN network between the main DC and the satellite location. By supporting anti-quorums on the satellites, we can submit mutation to two different satellites, and return success when one of the two responds.
