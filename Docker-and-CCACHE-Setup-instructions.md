@@ -79,6 +79,15 @@ sudo systemctl enable sshd
 sudo systemctl start sshd
 ```
 
+# Starting the docker daemon
+
+Enable and start the docker daemon if not already running with these commands:
+
+```
+sudo systemctl enable docker
+sudo systemctl start docker
+```
+
 # Building the Image
 
 You can use the published docker image at `foundationdb/foundationdb-build:latest` but to make sure you have the newest image (or if you want to make changes to it) you should build it yourself (in this example we name the image `docker-build` but of course you can chose any other name):
