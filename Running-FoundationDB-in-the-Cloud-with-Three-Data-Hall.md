@@ -107,6 +107,8 @@ For the rest of this documentation, we assume that this is the cluster we want t
 
 AWS support [Spread Placement Groups](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html#placement-groups-spread) to ensure that multiple VMs run on different physical machines. One important limitation to spread placement is that only up to 7 EC2 instances can be in one spread placement group.
 
+![spread group](https://i.ibb.co/ZVXTBVn/spread-groups.png)
+
 # FoundationDB Configuration
 
 Here comes the more interesting part: how do you configure FoundationDB for maximum reliability. The mode that seems to work best for FoundationDB on AWS (or any cloud provider) is called _three data hall_. 
