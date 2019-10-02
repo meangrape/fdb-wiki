@@ -26,6 +26,8 @@
 
 *Move recovery to the cluster controller* - (Evan) - The only reason that recovery is done on the master is because of path dependance. There are a lot of unnecessary interactions between the cluster controller and the master to support this recovery path, which makes is very difficult to change recruitment logic. By having recovery happen on the cluster controller, we will be able to write a single function for generating the best allocation of roles at any given moment, and have a single comparison function which will be able to tell us if it is worth killing the current generation to re-recruit in new locations.
 
+*New memory storage engine* - (Mengran) - The in-memory part of the memory storage engine is a simple std::map-like data structure.  Replacing this with a Radix Tree / Trie-like data structure would allow for both more efficient lookups and a smaller memory usage.
+
 *ConnectionTest role* - In 6.2 clients no longer connect to all of the coordinators. This means we no longer have a method of safely checking if clients can establish TLS connections before switching a cluster to use TLS. The proposed solution to this problem is to have a new role, which when present in a cluster will be sent to clients, and the clients will report if they can connect to the process.
 
 *Multi-version fdbcli* - One big operational headache is that when upgrading a cluster, fdbcli no longer works because the version changes. This means you have to bounce the processes with one version of the fdbcli, and check to see if the cluster is healthy with the next version of the fdbcli. By writing fdbcli such that it can use the multi-version client, a single binary will be usable through the whole process.
