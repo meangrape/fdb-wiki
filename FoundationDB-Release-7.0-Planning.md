@@ -34,7 +34,7 @@
 
 *Support processes changing IP addresses* - (Bhaskar?) - Kubernetes does not guarantee that a process will have the same IP address after a reboot. By changing exclude to be locality based, and by changing cluster files to support DNS addresses, we can make FoundationDB more friendly for Kubernetes users.
 
-*Downgrade simulation testing* - FDB 6.1 introduced a forward compatibility framework to allow users to downgrade their cluster after an upgrade.  However, no tests exist that enforce or verify that downgrades work and are correct, and thus this support was never documented.  Adding downgrades to restarting tests will allow us to offer official guidance of when and how downgrades are supported.
+*Downgrade simulation testing* - (Alex) - FDB 6.1 introduced a forward compatibility framework to allow users to downgrade their cluster after an upgrade.  However, no tests exist that enforce or verify that downgrades work and are correct, and thus this support was never documented.  Adding downgrades to restarting tests will allow us to offer official guidance of when and how downgrades are supported.
 
 # *Notable features which will not be in 7.0*
 
