@@ -5,4 +5,6 @@ Follow these steps to obtain heap profiles:
 3. Run with gperftools enabled: `HEAPPROFILE=/tmp/fdbserver fdbserver [args...]`
 4. Profile the heap profile: `pprof-symbolize gperf-build/bin/fdbserver /tmp/fdbserver.0065.heap`
 
-See sample profile from https://github.com/apple/foundationdb/issues/2218.
+Note that the profiling runs are at least 10X slower than the runs without profiling.
+
+See a sample profile [here](https://github.com/apple/foundationdb/issues/2218).
