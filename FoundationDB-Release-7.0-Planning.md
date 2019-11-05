@@ -26,8 +26,6 @@
 
 *Report conflicting key* - (Chaoguang) - As a developer writing applications on top of FoundationDB, it is often hard to track down what is going wrong when the conflict rate spikes up dramatically. By providing a key which conflicted along with the error when a transaction conflicts, clients will more easier be able to debug problems.
 
-*Move recovery to the cluster controller* - (Evan) - The only reason that recovery is done on the master is because of path dependance. There are a lot of unnecessary interactions between the cluster controller and the master to support this recovery path, which makes is very difficult to change recruitment logic. By having recovery happen on the cluster controller, we will be able to write a single function for generating the best allocation of roles at any given moment, and have a single comparison function which will be able to tell us if it is worth killing the current generation to re-recruit in new locations.
-
 *New memory storage engine* - (Mengran) - The in-memory part of the memory storage engine is a simple std::map-like data structure.  Replacing this with a Radix Tree / Trie-like data structure would allow for both more efficient lookups and a smaller memory usage.
 
 *ConnectionTest role* - In 6.2 clients no longer connect to all of the coordinators. This means we no longer have a method of safely checking if clients can establish TLS connections before switching a cluster to use TLS. The proposed solution to this problem is to have a new role, which when present in a cluster will be sent to clients, and the clients will report if they can connect to the process.
@@ -41,6 +39,8 @@
 # *Notable features which will not be in 7.0*
 
 *Predicate pushdown* - The FoundationDB API does not have efficient methods for implementing filtering or aggregations. With the existing API, if you want to count the number of keys in a key range, you need to send all of the keys and values in the range back to the client. This feature will allow clients to do server side filtering and aggregation, which should make a number of different operations in the record layer much more efficient.
+
+*Move recovery to the cluster controller* - The only reason that recovery is done on the master is because of path dependance. There are a lot of unnecessary interactions between the cluster controller and the master to support this recovery path, which makes is very difficult to change recruitment logic. By having recovery happen on the cluster controller, we will be able to write a single function for generating the best allocation of roles at any given moment, and have a single comparison function which will be able to tell us if it is worth killing the current generation to re-recruit in new locations.
 
 *Satellite anti-quorums* - FoundationDB synchronously commits to the satellites TLogs with every commit. This makes tail latencies dependent on the WAN network between the main DC and the satellite location. By supporting anti-quorums on the satellites, we can submit mutation to two different satellites, and return success when one of the two responds.
 
