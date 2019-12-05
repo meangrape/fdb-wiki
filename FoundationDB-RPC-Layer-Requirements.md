@@ -1,4 +1,4 @@
-# TLF GitHub Issue
+# GitHub Issue
 
 https://github.com/apple/foundationdb/issues/2302
 
