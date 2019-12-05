@@ -2,6 +2,10 @@
 
 https://github.com/apple/foundationdb/issues/2302
 
+# Forum Discussion
+
+https://forums.foundationdb.org/t/rpc-layer-requirements-and-design/1817
+
 # Feature Definition
 
 ## Feature Summary
