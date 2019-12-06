@@ -10,4 +10,4 @@
 
 [Existing Documentation](https://github.com/apple/foundationdb/blob/master/documentation/sphinx/source/kv-architecture.rst)
 
-![Summit Presentation](https://www.youtube.com/watch?list=PLbzoR-pLrL6q7uYN-94-p_-Q3hyAmpI7o&v=EMwhsGsxfPU&feature=emb_logo)
+[Summit Presentation](https://www.youtube.com/watch?list=PLbzoR-pLrL6q7uYN-94-p_-Q3hyAmpI7o&v=EMwhsGsxfPU&feature=emb_logo)
