@@ -1,4 +1,4 @@
-https://forums.foundationdb.org/t/technical-overview-of-the-database/135/26
+[Forum Post](https://forums.foundationdb.org/t/technical-overview-of-the-database/135/26)
 
 
 ![](https://aws1.discourse-cdn.com/foundationdb/original/1X/cf8c5fc2f9f5675055c05610bc495f5b760444e1.jpeg)
@@ -8,6 +8,6 @@ https://forums.foundationdb.org/t/technical-overview-of-the-database/135/26
 ![](https://aws1.discourse-cdn.com/foundationdb/original/1X/8a2f0e6b6ba9109aeb895a0f7f275cb251ecf488.jpeg)
 ![](https://aws1.discourse-cdn.com/foundationdb/original/1X/39ef9f39ff6a382818f9386aa4538be4f80a6fdc.jpeg)
 
-https://github.com/apple/foundationdb/blob/master/documentation/sphinx/source/kv-architecture.rst
+[Existing Documentation](https://github.com/apple/foundationdb/blob/master/documentation/sphinx/source/kv-architecture.rst)
 
-https://www.youtube.com/watch?list=PLbzoR-pLrL6q7uYN-94-p_-Q3hyAmpI7o&v=EMwhsGsxfPU&feature=emb_logo
+![]https://www.youtube.com/watch?list=PLbzoR-pLrL6q7uYN-94-p_-Q3hyAmpI7o&v=EMwhsGsxfPU&feature=emb_logo
