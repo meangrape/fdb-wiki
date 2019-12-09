@@ -1,12 +1,12 @@
 # Trace Event Descriptions
 
-## Fields
+# Fields
 
 TrackLatestType
 
 Roles
 
-## Severity Levels
+# Severity Levels
 
 10
 
@@ -16,7 +16,7 @@ Roles
 
 40
 
-## Periodic Messages
+# Periodic Messages
 
 TLogMetrics
 
@@ -44,9 +44,9 @@ RkUpdate
 
 DatacenterVersionDifference
 
-## Edge Triggered Messages
+# Edge Triggered Messages
 
-### Generic Failure Info
+## Generic Failure Info
 
 SlowTask
 
@@ -74,7 +74,7 @@ LargePacketSent
 
 LargePacketReceived
 
-### Master Recovery
+## Master Recovery
 
 MasterRecoveryState
 
@@ -92,7 +92,7 @@ BetterMasterExists
 
 CCWDB
 
-### TLog Recovery
+## TLog Recovery
 
 TLogRestorePersistentState
 
@@ -114,7 +114,7 @@ GetDurableResult
 
 GetDurableResultWaiting
 
-### Storage Server Recovery
+## Storage Server Recovery
 
 Rollback
 
@@ -126,7 +126,7 @@ SSTimeRestoreDurableState
 
 StorageServerStartingCore
 
-### Data Distribution
+## Data Distribution
 
 StatusMapChange
 
@@ -142,7 +142,7 @@ DDInitTakingMoveKeysLock
 
 DDInitTookMoveKeysLock
 
-### Coordination
+## Coordination
 
 NominatingLeader
 
