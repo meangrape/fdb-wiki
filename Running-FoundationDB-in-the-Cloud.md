@@ -107,7 +107,14 @@ For the rest of this documentation, we assume that this is the cluster we want t
 
 AWS support [Spread Placement Groups](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html#placement-groups-spread) to ensure that multiple VMs run on different physical machines. One important limitation to spread placement is that only up to 7 EC2 instances can be in one spread placement group.
 
-![spread group](https://i.ibb.co/ZVXTBVn/spread-groups.png)
+Currently FoundationDB can not make use of anti-placement which is a serious limitation. The main problem with that is that one might lose data if an AZ and a machine (in a different AZ) go down at the same time.
+
+Currently solving this issue manually is possible by using a combination of these strategies:
+
+1. As long as the cluster consists of fewer than 21 machines of each type, anti-placement can be used (7 machines per AZ).
+1. One can use `.metal` machines (or the biggest VM available which will usually run on dedicated hardware). An important thing to look out for when doing this is that these machines often are NUMA-machines (`numactl` can be used to place `fdbserver` processes into NUMA regions).
+
+This is obviously not optimal and we'll hopefully find a better fix for this. #2126 tracks this.
 
 # FoundationDB Configuration
 
