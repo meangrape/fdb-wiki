@@ -58,7 +58,13 @@ Net2SlowTaskTrace
 
 FailureDetectionStatus
 
+ConnectingTo
+
 ConnectionClosed
+
+ConnectionTimedOut
+
+ConnectionTimeout
 
 ProgramStart
 
