@@ -118,4 +118,44 @@ This is obviously not optimal and we'll hopefully find a better fix for this. #2
 
 # FoundationDB Configuration
 
-Here comes the more interesting part: how do you configure FoundationDB for maximum reliability. The mode that seems to work best for FoundationDB on AWS (or any cloud provider) is called _three data hall_. 
+Here comes the more interesting part: how to configure FoundationDB for maximum reliability. The main things to keep in mind is the following:
+
+1. Whenever the FoundationDB documentation talks about data centers, it assumes that these data centers are geographically far apart. In AWS terminology this would correspond to a region.
+1. FoundationDB doesn't (yet) have a concept of availability zones.
+1. Zones in FoundationDB refer to a fault domain (this could be used for example to group all machines within a rack together). In a cloud environment we currently don't know of any users who make use of this.
+
+## Replication Mode
+
+FoundationDB supports several replication modes and all of them are documented [here](https://apple.github.io/foundationdb/configuration.html).
+
+The recommended replication mode for most users running in the cloud is `three_data_hall`. With this mode a cluster can survive the failure of one machine and one AZ. The policy works as follows:
+
+1. For storages: each AZ holds exactly one copy of data. If an AZ fails, the cluster will be available and run with only two copies of data (until a third AZ comes back).
+1. For TLogs: There can be at most two copies of data in one AZ and there are four copies in total. So if an AZ and a machine fail, there is one copy left.
+
+It is important that there are enough processes of each class so that the cluster can recovery if one AZ and one machine fail. This means specifically that one should have at least three machines per AZ and each machine should run at least one tlog process.
+
+### Setting Localities in the Configuration
+
+Locality is configured through the `foundationdb.conf` file:
+
+```
+[fdbserver]
+command = /usr/sbin/fdbserver
+public_address = auto:$ID
+listen_address = public
+datadir = /var/lib/foundationdb/data/$ID
+logdir = /var/log/foundationdb
+# logsize = 10MiB
+# maxlogssize = 100MiB
+# class =
+# memory = 8GiB
+# storage_memory = 1GiB
+# cache_memory = 2GiB
+# locality_machineid =
+# locality_zoneid =
+# locality_data_hall =
+```
+
+The only locality which is strictly needed is `locality_data_hall` (the `machineid` and `zoneid` is set to a random value by default and will be set on a per machine basis). All machines within the same AZ have to have the same data hall locality.
+
