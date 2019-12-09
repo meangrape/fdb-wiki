@@ -14,8 +14,6 @@ Machine
 
 Time
 
-Roles
-
 # Common Fields
 
 Error
@@ -25,6 +23,8 @@ Backtrace
 TrackLatestType
 
 SuppressedEventCount
+
+Roles
 
 # Severity Levels
 
