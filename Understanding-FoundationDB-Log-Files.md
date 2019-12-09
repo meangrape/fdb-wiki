@@ -6,6 +6,10 @@ TrackLatestType
 
 Roles
 
+Machine
+
+Time
+
 # Severity Levels
 
 10
