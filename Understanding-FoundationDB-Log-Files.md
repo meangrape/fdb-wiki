@@ -2,13 +2,17 @@
 
 # Fields
 
-TrackLatestType
-
-Roles
-
 Machine
 
 Time
+
+Roles
+
+Error
+
+Backtrace
+
+TrackLatestType
 
 # Severity Levels
 
