@@ -1,12 +1,22 @@
 # Trace Event Descriptions
 
-# Fields
+# Mandatory Fields
+
+Type
+
+LogGroup
+
+Severity
+
+ID
 
 Machine
 
 Time
 
 Roles
+
+# Common Fields
 
 Error
 
