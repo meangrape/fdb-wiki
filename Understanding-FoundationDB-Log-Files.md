@@ -56,6 +56,8 @@ RkUpdateBatch
 
 DatacenterVersionDifference
 
+SpringCleaningMetrics
+
 # Edge Triggered Messages
 
 ## Generic Failure Info
