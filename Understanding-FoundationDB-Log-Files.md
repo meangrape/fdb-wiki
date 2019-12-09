@@ -122,6 +122,8 @@ TLogUpdateLag
 
 TraceEventThrottle_*
 
+TLS*
+
 ## Master Recovery
 
 MasterRecoveryState
