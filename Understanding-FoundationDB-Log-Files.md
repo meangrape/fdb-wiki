@@ -74,6 +74,10 @@ LargePacketSent
 
 LargePacketReceived
 
+HugeArenaSample
+
+GetMagazineSample
+
 ## Master Recovery
 
 MasterRecoveryState
