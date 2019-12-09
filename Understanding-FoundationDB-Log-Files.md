@@ -44,6 +44,8 @@ DDTrackerStats
 
 RkUpdate
 
+RkUpdateBatch
+
 DatacenterVersionDifference
 
 # Edge Triggered Messages
