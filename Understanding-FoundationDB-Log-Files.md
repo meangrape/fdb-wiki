@@ -108,6 +108,16 @@ HugeArenaSample
 
 GetMagazineSample
 
+SlowKAIOTruncate
+
+SlowKAIOLaunch
+
+KVCommit10sSample
+
+StorageServerUpdateLag
+
+TLogUpdateLag
+
 ## Master Recovery
 
 MasterRecoveryState
