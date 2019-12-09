@@ -24,6 +24,8 @@ Backtrace
 
 TrackLatestType
 
+SuppressedEventCount
+
 # Severity Levels
 
 10
