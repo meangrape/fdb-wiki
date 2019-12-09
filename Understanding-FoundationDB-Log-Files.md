@@ -40,6 +40,8 @@ MovingData
 
 TotalDataInFlight
 
+DDTrackerStats
+
 RkUpdate
 
 DatacenterVersionDifference
