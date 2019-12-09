@@ -30,6 +30,8 @@ MachineMetrics
 
 NetworkMetrics
 
+MemoryMetrics
+
 LogRouterMetrics
 
 ClusterControllerMetrics
