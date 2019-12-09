@@ -201,3 +201,9 @@ LeaderFalseHeartbeat
 LeaderNoHeartbeat
 
 ReleasingLeadership
+
+## Client Messages
+
+ClientStart
+
+TransactionMetrics
