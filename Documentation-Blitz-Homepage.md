@@ -42,5 +42,6 @@
 # Data Modeling
 
 # Developer Guide
+* https://github.com/apple/foundationdb/wiki/Memory-Considerations
 
 # Layer Concept
