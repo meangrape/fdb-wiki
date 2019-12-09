@@ -118,6 +118,8 @@ StorageServerUpdateLag
 
 TLogUpdateLag
 
+TraceEventThrottle_*
+
 ## Master Recovery
 
 MasterRecoveryState
