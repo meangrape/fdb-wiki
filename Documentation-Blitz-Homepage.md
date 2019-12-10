@@ -36,7 +36,7 @@
 # Python API
 
 # C API
-
+* https://github.com/apple/foundationdb/wiki/Does-%60fdb_future_set_callback%60-guarantee-exactly-once-execution%3F
 # Design Recipes
 
 # Data Modeling
