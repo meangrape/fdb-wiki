@@ -44,5 +44,6 @@
 # Developer Guide
 * https://github.com/apple/foundationdb/wiki/Memory-Considerations
 * https://github.com/apple/foundationdb/wiki/Debug-Out-Of-Memory-(OOM)-Errors-in-Simulation
+* https://github.com/apple/foundationdb/wiki/Difference-between-snapshot-reads-and-regular-reads
 
 # Layer Concept
