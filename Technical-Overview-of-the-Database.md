@@ -11,6 +11,8 @@ The cluster controller is a singleton elected by a majority of coordinators. It 
 ### Master
 The master is responsible for coordinating the transition of the write sub-system from one generation to the next. The write sub-system includes the master, proxies, resolvers, and transaction logs. The three roles are treated as a unit, and if any of them fail, we will recruit a replacement for all three roles. The master provides the commit versions for batches of the mutations to the proxies.
 
+Historically, Ratekeeper and Data Distributor are coupled with Master on the same process. Since 6.2, both have become a singleton in the cluster. The life time is no longer tied with Master.
+
 ### Proxies
 The proxies are responsible for providing read versions, committing transactions, and tracking the storage servers responsible for each range of keys. To provide a read version, a proxy will ask all other proxies to see the largest committed version at this point in time, while simultaneously checking that the transaction logs have not been stopped. Ratekeeper will artificially slow down the rate at which the proxy provides read versions.
 
@@ -33,11 +35,11 @@ The vast majority of processes in a cluster are storage servers. Storage servers
 
 ### Data Distributor
 
-Data distributor manages the lifetime of storage servers, decides which storage server is responsible for which data range, and ensures data is evenly distributed across all storage servers (SS). See [internal documentation](https://github.com/apple/foundationdb/blob/master/design/data-distributor-internals.md).
+Data distributor manages the lifetime of storage servers, decides which storage server is responsible for which data range, and ensures data is evenly distributed across all storage servers (SS). Data distributor as a singleton in the cluster is recruited and monitored by Cluster Controller. See [internal documentation](https://github.com/apple/foundationdb/blob/master/design/data-distributor-internals.md).
 
 ### Ratekeeper
 
-Ratekeeper monitors system load and slows down client transaction rate when the cluster is close to saturation by lowering the rate at which the proxy provides read versions.
+Ratekeeper monitors system load and slows down client transaction rate when the cluster is close to saturation by lowering the rate at which the proxy provides read versions. Ratekeeper as a singleton in the cluster is recruited and monitored by Cluster Controller. 
 
 ### Clients
 
@@ -48,9 +50,9 @@ A client links with specific language bindings (i.e., client libraries) in order
 
 A database transaction in FoundationDB starts by a client contacting one of the Proxies to obtain a read version, which is guaranteed to be larger than any of commit version that client may know about (even through side channels outside the FoundationDB cluster). This is needed so that a client will see the result of previous commits that have happened.
 
-Then the client may issue multiple reads to storage servers and obtain values at that specific read version. Client writes are kept in local memory without contacting the cluster.
+Then the client may issue multiple reads to storage servers and obtain values at that specific read version. Client writes are kept in local memory without contacting the cluster. By default, reading a key that was written in the same transaction will return the newly written value.
 
-At commit time, the client sends the transaction data (all reads and writes) to one of the Proxies and waits for commit or abort response from the proxy. If the transaction conflicts with another one and cannot commit, the client may choose to retry the transaction from the beginning again. If the transaction commits, the proxy also returns the commit version back to the client. Note this commit version is larger than the read version and is chosen by the master. By default, reading a key that was written in the same transaction will return the newly written value.
+At commit time, the client sends the transaction data (all reads and writes) to one of the Proxies and waits for commit or abort response from the proxy. If the transaction conflicts with another one and cannot commit, the client may choose to retry the transaction from the beginning again. If the transaction commits, the proxy also returns the commit version back to the client. Note this commit version is larger than the read version and is chosen by the master.
 
 ![](https://aws1.discourse-cdn.com/foundationdb/original/1X/032af061abbd783549a8b4805e09f53e1cad2a83.jpeg)
 ![](https://aws1.discourse-cdn.com/foundationdb/original/1X/cf8c5fc2f9f5675055c05610bc495f5b760444e1.jpeg)
@@ -63,6 +65,8 @@ At commit time, the client sends the transaction data (all reads and writes) to 
 
 [Forum Post](https://forums.foundationdb.org/t/technical-overview-of-the-database/135/26)
 
-[Existing Documentation](https://github.com/apple/foundationdb/blob/master/documentation/sphinx/source/kv-architecture.rst)
+[Existing Architecture Documentation](https://github.com/apple/foundationdb/blob/master/documentation/sphinx/source/kv-architecture.rst)
 
 [Summit Presentation](https://www.youtube.com/watch?list=PLbzoR-pLrL6q7uYN-94-p_-Q3hyAmpI7o&v=EMwhsGsxfPU&feature=emb_logo)
+
+[Data Distribution Documentation](https://github.com/apple/foundationdb/blob/master/design/data-distributor-internals.md)
