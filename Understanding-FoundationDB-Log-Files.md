@@ -2,21 +2,25 @@
 
 # Mandatory Fields
 
-Type
+Type - The name of the trace event.
 
-LogGroup
+LogGroup - The value of the `--loggroup` parameter passed to `fdbserver`. This is useful when trace logs from multiple databases are ingested into the same system. 
 
 Severity
+* 10 - SevInfo - General information events
+* 20 - SevWarn - Indicates a generally rare event, but not indicate a actual problem
+* 30 - SevWarnAlways - Indicates an event that could be causing performance problems in a cluster
+* 40 - SevError - Indicates one of the assumptions of the database has been violated. Generally caused by hardware failures.
 
-ID
+ID - The ID of the role which produced the event. For instance, messages logged by the master will contain the master's ID.
 
-Machine
+Machine - The IP address and port of the process which produced the event. For client trace logs the pid of the process is logged instead of the port.
 
-Time
+Time - The time at which the event happened.
 
 # Common Fields
 
-Error
+Error 
 
 Backtrace
 
@@ -25,16 +29,6 @@ TrackLatestType
 SuppressedEventCount
 
 Roles
-
-# Severity Levels
-
-10
-
-20
-
-30
-
-40
 
 # Periodic Messages
 
