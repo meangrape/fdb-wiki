@@ -21,6 +21,7 @@ If you are only storing data in two DCs, we recommend that you provision 3 proce
 In three data hall mode, we also recommend 9 coordinators, by the same logic.
 
 | Replication Mode | Coordinator Count |
+| ----- | ------ |
 | single | 1 |
 | double | 3 |
 | triple | 5 |
