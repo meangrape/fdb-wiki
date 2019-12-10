@@ -34,7 +34,7 @@
 
 # Common Fields
 
-**Error** - Events which are logged because of an error include the associated [error code.](https://apple.github.io/foundationdb/api-error-codes.html?highlight=error%20codes) 
+**Error** - Events which are logged because of an error include the associated [error code.](https://apple.github.io/foundationdb/api-error-codes.html) 
 
 **Backtrace** - Some high severity events include a backtrace which provides the call stack of the system at the time the event was generated.
 
