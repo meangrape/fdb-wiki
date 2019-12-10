@@ -10,8 +10,9 @@ All server nodes within a cluster participate in the cluster coordination proces
 
 The three roles (explained in more detail below) that participate in this process are:
 
-1. The **coordinators** those are typically chosen by the administrator and a cluster typically runs between one and 5 of those.
+1. The **coordinators** are typically chosen by the administrator and a cluster typically runs between one and 5 of those.
 1. The **cluster controller** is the leader and is elected by the coordinators. Any node in the cluster can become leader, but an administrator can make the election of certain processes much more likely by setting a role.
+1. **Workers** are a fundamental building block for a FoundationDB cluster. Every process runs this role. It's main functionality is to allow to start other roles (like storage, tlog, master, resolver, etc).
 
 ## The Coordinators
 
@@ -37,7 +38,7 @@ The cluster controller has many responsibilities (and not all of them will be ex
 1. It serves as the endpoint to clients for opening the database (not explained in this document).
 1. It can generate the `status` json document for `fdbcli` and clients (not explained in this document).
 
-# The Workers
+## The Workers
 
 Every `fdbserver` process that joins the cluster runs a worker role. It's interface can be found in `fdbserver/WorkerInterface.actor.h` (`WorkerInterface` only visible to other servers) and `ClientWorkerInterface.h` (`ClientWorkerInterface` also visible to clients).
 
@@ -53,4 +54,26 @@ The workers provide the following functionality:
 1. Some useful debugging facilities.
 1. An RPC interface to ask for certain logged events (`eventLogRequest`). This is mainly used for `status json`: the CC can use that to ask for metrics that are then forwarded to the client.
 
+# Detecting Failures
 
+As in any distributed system, detecting failures is generally an unsolvable problem. Therefore we have to rely on timeouts of sorts to make a best effort. Generally, if a node doesn't reply to a request within a time window, any of the following could've happened:
+
+1. The node failed (either the process or the machine died).
+2. The actor that is listening to the corresponding endpoint died.
+3. The node is very slow (for example because it is experiencing very high load and the actor that should reply to the request is starving).
+4. There is a network partition - this is especially tricky as it could mean that other nodes in the cluster can talk to that node just fine.
+5. The network is very slow or experience a high number of packet losses (FDB is using TCP - so these two scenarios will have the same effect).
+
+FoundationDB uses heuristics to detect partitions and node failures. In many cases there are important trade-offs to consider when doing this. For example if the cluster controller believes that the master server died (due to a timeout), it will elect a new master which will cause a complete recovery. But recoveries have a large impact on the system (all in-flight transactions are aborted and no new transactions can be started for a short amount of time). Therefore, false positives are expensive. To keep the probability of such a false positive low, the cluster controller can wait longer for the master server to respond to heart beat requests. However, this means that whenever the master actually fails, it will take longer for the cluster controller to initiate a recovery which will in turn mean that downtimes are longer whenever the master fails.
+
+This section describes several concepts implemented within FoundationDB that help a system to detect node failures and network partitions:
+
+1. FailureMonitor is used to detect node failures. A node is marked as failed globally if it can't communicate with the cluster controller.
+1. WaitFailure client/server is a service that is ran by some nodes. It allows to detect machine failures and actor failures. WaitFailure uses FailureMonitor to achieve this.
+1. Ping messages within the transport layer. This is an orthogonal concept and is used to detect partitions. It is not used to mark nodes as failed. Instead it is used to implement at most once and at least once semantic for message delivery.
+
+## FailureMonitor
+
+## WaitFailure
+
+## Ping
