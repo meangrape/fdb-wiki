@@ -37,3 +37,20 @@ The cluster controller has many responsibilities (and not all of them will be ex
 1. It serves as the endpoint to clients for opening the database (not explained in this document).
 1. It can generate the `status` json document for `fdbcli` and clients (not explained in this document).
 
+# The Workers
+
+Every `fdbserver` process that joins the cluster runs a worker role. It's interface can be found in `fdbserver/WorkerInterface.actor.h` (`WorkerInterface` only visible to other servers) and `ClientWorkerInterface.h` (`ClientWorkerInterface` also visible to clients).
+
+On startup the worker tries to become a leader and it will get a cluster controller interface as a result (this could be an interface to itself if it won the election). It will then let the cluster controller know of its existence by calling `registerWorker` on the CC interface. This allows the CC to curate a list of life workers.
+
+Furthermore the worker will check whether there are existing files of interest in the data directory on startup. This means specifically that it will check for tlog, storage, and coordinator files when it starts and if one or more of these files exist, it will automatically reboot that role.
+
+The workers provide the following functionality:
+
+1. They provide RPC interfaces to initialize/start new roles (like tlog, storage, master, resolver, etc). This is used by the CC and master during recovery.
+1. A `waitFailure` interface (explained below). This is used to detect worker failures.
+1. An interface to execute disk snapshots (not explained in this document).
+1. Some useful debugging facilities.
+1. An RPC interface to ask for certain logged events (`eventLogRequest`). This is mainly used for `status json`: the CC can use that to ask for metrics that are then forwarded to the client.
+
+
