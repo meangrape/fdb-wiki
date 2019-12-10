@@ -1,5 +1,3 @@
-# Trace Event Descriptions
-
 # Mandatory Fields
 
 **Type** - The name of the trace event.
@@ -42,13 +40,111 @@
 
 **SuppressedEventCount** - Many events have a maximum cap on the number of times they can be logged in a given time interval. Events that have this time of suppression include the number of events that were not logged in the next message which does get written.
 
+**Counters** - Fields which have values that are three space separated numeric values are called counters. The first number is the the amount the value has increases per second since the field was last logged. The second number is a roughness, where larger numbers represent that the increases to this field are very bursty, and smaller values represent that the value has increase at a very regular interval. The third number is the total amount this value has increased since the start of the role logging the event.
+
 # Periodic Messages
 
-TLogMetrics
+**TLogMetrics**
+
+* BytesInput
+* BytesDurable
+* Version
+* QueueCommittedVersion
+* PersistentDataVersion
+* PersistentDataDurableVersion
+* KnownCommittedVersion
+* MinPoppedTagVersion
+* MinPoppedTagLocality
+* MinPoppedTagId
+* SharedBytesInput
+* SharedBytesDurable
+* SharedOverheadBytesInput
+* SharedOverheadBytesDurable
+* KvstoreBytesUsed
+* KvstoreBytesFree
+* KvstoreBytesAvailable
+* KvstoreBytesTotal
+* QueueDiskBytesUsed
+* QueueDiskBytesFree
+* QueueDiskBytesAvailable
+* QueueDiskBytesTotal
+* PeekMemoryReserved
+* PeekMemoryRequestsStalled
 
 ProxyMetrics
 
+* TxnStartIn
+* TxnStartOut
+* TxnStartBatch
+* TxnSystemPriorityStartIn
+* TxnSystemPriorityStartOut
+* TxnBatchPriorityStartIn
+* TxnBatchPriorityStartOut
+* TxnDefaultPriorityStartIn
+* TxnDefaultPriorityStartOut
+* TxnCommitIn
+* TxnCommitVersionAssigned
+* TxnCommitResolving
+* TxnCommitResolved
+* TxnCommitOut
+* TxnCommitOutSuccess
+* TxnConflicts
+* CommitBatchIn
+* CommitBatchOut
+* MutationBytes
+* Mutations
+* ConflictRanges
+* KeyServerLocationRequests
+* LastAssignedCommitVersion
+* Version
+* CommittedVersion
+* CommitBatchesMemBytesCount
+
 StorageMetrics
+
+* GetKeyQueries
+* GetValueQueries
+* GetRangeQueries
+* QueryQueue
+* FinishedQueries
+* RowsQueried
+* BytesQueried
+* WatchQueries
+* EmptyQueries
+* BytesInput
+* BytesDurable
+* BytesFetched
+* MutationBytes
+* SampledBytesCleared
+* Mutations
+* SetMutations
+* ClearRangeMutations
+* AtomicMutations
+* UpdateBatches
+* UpdateVersions
+* Loops
+* FetchWaitingMS
+* FetchWaitingCount
+* FetchExecutingMS
+* FetchExecutingCount
+* ReadsRejected
+* LastTLogVersion
+* Version
+* StorageVersion
+* DurableVersion
+* DesiredOldestVersion
+* VersionLag
+* LocalRate
+* FetchKeysFetchActive
+* FetchKeysWaiting
+* QueryQueueMax
+* BytesStored
+* ActiveWatches
+* WatchBytes
+* KvstoreBytesUsed
+* KvstoreBytesFree
+* KvstoreBytesAvailable
+* KvstoreBytesTotal
 
 ProcessMetrics
 
@@ -129,6 +225,10 @@ TLogUpdateLag
 TraceEventThrottle_*
 
 TLS*
+
+ServerTag
+
+ServerTagRemove
 
 ## Master Recovery
 
