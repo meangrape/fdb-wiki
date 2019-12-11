@@ -1,7 +1,5 @@
 ## Components in FoundationDB
 
-![](https://aws1.discourse-cdn.com/foundationdb/original/1X/8a2f0e6b6ba9109aeb895a0f7f275cb251ecf488.jpeg)
-
 ### Coordinators
 All clients and servers connect to a FoundationDB cluster with a cluster file, which contains the IP:PORT of the coordinators. Both the clients and servers use the coordinators to connect with the cluster controller. The servers will attempt to become the cluster controller if one does not exist, and register with the cluster controller once one has been elected. Clients use the cluster controller to keep an up-to-date list of proxies.
 
@@ -12,6 +10,8 @@ The cluster controller is a singleton elected by a majority of coordinators. It 
 The master is responsible for coordinating the transition of the write sub-system from one generation to the next. The write sub-system includes the master, proxies, resolvers, and transaction logs. The three roles are treated as a unit, and if any of them fail, we will recruit a replacement for all three roles. The master provides the commit versions for batches of the mutations to the proxies.
 
 Historically, Ratekeeper and Data Distributor are coupled with Master on the same process. Since 6.2, both have become a singleton in the cluster. The life time is no longer tied with Master.
+
+![](https://aws1.discourse-cdn.com/foundationdb/original/1X/8a2f0e6b6ba9109aeb895a0f7f275cb251ecf488.jpeg)
 
 ### Proxies
 The proxies are responsible for providing read versions, committing transactions, and tracking the storage servers responsible for each range of keys. To provide a read version, a proxy will ask all other proxies to see the largest committed version at this point in time, while simultaneously checking that the transaction logs have not been stopped. Ratekeeper will artificially slow down the rate at which the proxy provides read versions.
@@ -54,7 +54,18 @@ Then the client may issue multiple reads to storage servers and obtain values at
 
 At commit time, the client sends the transaction data (all reads and writes) to one of the Proxies and waits for commit or abort response from the proxy. If the transaction conflicts with another one and cannot commit, the client may choose to retry the transaction from the beginning again. If the transaction commits, the proxy also returns the commit version back to the client. Note this commit version is larger than the read version and is chosen by the master.
 
+### Determine Read Version
+
+When a client requests a read version from a proxy, the proxy asks all other proxies for their last commit versions, and checks a set of transaction logs satisfying replication policy are live. Then the proxy returns the maximum commit version as the read version to the client.
+
 ![](https://aws1.discourse-cdn.com/foundationdb/original/1X/032af061abbd783549a8b4805e09f53e1cad2a83.jpeg)
+
+The reason for the proxy to contact all other proxies for commit versions is to ensure the read version is larger than any previously committed version. Consider that if proxy `A` commits a transaction, and then the client asks proxy `B` for a read version. The read version from proxy `B` must be larger than the version committed by proxy `A`. The only way to get this information is by asking proxy `A` for its largest committed version.
+
+The reason for checking a set of transaction logs satisfying replication policy are live is to ensure the proxy is not replaced with newer generation of transaction logs. This is because proxy is a stateless role recruited in each generation. If a recovery has happened and the proxy is still live, this old proxy could still give out read versions. As a result, a *read-only* transaction may see stale results. By checking a set of transaction logs satisfying replication policy are live, the proxy makes sure no recovery has happened, thus the *read-only* transaction sees the latest data.
+
+Note that the client cannot simply ask the master for read versions. The master gives out versions to proxies to be committed, but the master does not know when the versions it gives out are durable on the transaction logs. Therefore it is not safe to do reads at the largest version the master has provided because that version might be rolled back in the event of a failure, so the client could end up reading data that was never committed. In order for the client to use versions from the master, the client needs to wait until all in-flight transaction-batches (a write version is used for a batch of transactions) to commit. This can take a long time and thus is inefficient. Another drawback of this approach is putting more work towards the master, because the master role can’t be scaled. Even though giving out read-versions isn’t very expensive, it still requires the master to get a transaction budget from the Ratekeeper, batches requests, and potentially maintains thousands of network connections from clients.
+
 ![](https://aws1.discourse-cdn.com/foundationdb/original/1X/cf8c5fc2f9f5675055c05610bc495f5b760444e1.jpeg)
 ![](https://aws1.discourse-cdn.com/foundationdb/original/1X/df2fa96cbdc35a482e2726a5f786be69dc5fc4a6.jpeg)
 ![](https://aws1.discourse-cdn.com/foundationdb/original/1X/2ba462a1102390fbd0cca88c06d3cb25f485cde5.jpeg)
