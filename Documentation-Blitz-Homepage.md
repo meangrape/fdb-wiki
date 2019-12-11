@@ -9,6 +9,9 @@
 
 # Administration
 
+# General Ops Knowledge
+* https://github.com/apple/foundationdb/wiki/Cluster-reaction-to-failures
+
 # Configuration
 
 * https://github.com/apple/foundationdb/wiki/Running-FoundationDB-in-the-Cloud
