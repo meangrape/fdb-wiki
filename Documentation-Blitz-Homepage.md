@@ -2,8 +2,6 @@
 
 [Technical Overview of the Database](https://github.com/apple/foundationdb/wiki/Technical-Overview-of-the-Database)
 
-# Developer Guide
-
 # FoundationDB Internals
 
 # Extending FoundationDB
@@ -36,7 +34,6 @@
 # Python API
 
 # Java API
-* https://github.com/apple/foundationdb/wiki/Difference-between-Tuple.range()-and-Range.startsWith()
 
 # C API
 * https://github.com/apple/foundationdb/wiki/Does-%60fdb_future_set_callback%60-guarantee-exactly-once-execution%3F
@@ -49,5 +46,6 @@
 * https://github.com/apple/foundationdb/wiki/Debug-Out-Of-Memory-(OOM)-Errors-in-Simulation
 * https://github.com/apple/foundationdb/wiki/Difference-between-snapshot-reads-and-regular-reads
 * https://github.com/apple/foundationdb/wiki/Locking-a-Key-Range
+* https://github.com/apple/foundationdb/wiki/Difference-between-Tuple.range()-and-Range.startsWith()
 
 # Layer Concept
