@@ -43,6 +43,7 @@
 # Design Recipes
 
 # Data Modeling
+* https://github.com/apple/foundationdb/wiki/Best-practice-of-storing-structured-data,-for-example-JSON-objects
 
 # Developer Guide
 * https://github.com/apple/foundationdb/wiki/Memory-Considerations
