@@ -1,5 +1,7 @@
 ## Components in FoundationDB
 
+The FoundationDB architecture chooses a decoupled design, where processes are assigned different heterogeneous roles (e.g., Coordinators, Storage Servers, Master). Scaling the database is achieved by horizontally expanding the number of processes for separate roles:
+
 ### Coordinators
 All clients and servers connect to a FoundationDB cluster with a cluster file, which contains the IP:PORT of the coordinators. Both the clients and servers use the coordinators to connect with the cluster controller. The servers will attempt to become the cluster controller if one does not exist, and register with the cluster controller once one has been elected. Clients use the cluster controller to keep an up-to-date list of proxies.
 
@@ -54,6 +56,8 @@ Then the client may issue multiple reads to storage servers and obtain values at
 
 At commit time, the client sends the transaction data (all reads and writes) to one of the Proxies and waits for commit or abort response from the proxy. If the transaction conflicts with another one and cannot commit, the client may choose to retry the transaction from the beginning again. If the transaction commits, the proxy also returns the commit version back to the client. Note this commit version is larger than the read version and is chosen by the master.
 
+The FoundationDB architecture separates the scaling of client reads and writes (i.e., transaction commits). Because clients directly issue reads to sharded storage servers, reads scale linearly to the number of storage servers. Similarly, writes are scaled by adding more processes to Proxies, Resolvers, and Log Servers in the transaction system.
+
 ### Determine Read Version
 
 When a client requests a read version from a proxy, the proxy asks all other proxies for their last commit versions, and checks a set of transaction logs satisfying replication policy are live. Then the proxy returns the maximum commit version as the read version to the client.
@@ -71,6 +75,13 @@ Note that the client cannot simply ask the master for read versions. The master 
 ![](https://aws1.discourse-cdn.com/foundationdb/original/1X/2ba462a1102390fbd0cca88c06d3cb25f485cde5.jpeg)
 ![](https://aws1.discourse-cdn.com/foundationdb/original/1X/39ef9f39ff6a382818f9386aa4538be4f80a6fdc.jpeg)
 
+### Transaction System Recovery
+
+The transaction system implements the write pipeline of the FoundationDB cluster and its performance is critical to the transaction commit latency. Whenever there is a failure in the transaction system, a recovery process is performed to restore the transaction system to a new configuration, i.e., a clean state. Specifically, the Master process monitors the health of Proxies, Resolvers, and Transaction Logs. If any one of the monitored process failed, the Master process terminates. The Cluster Controller will detect this event, and then recruits a new Master, which coordinates the recovery and recruits a new transaction system instance. In this way, the transaction processing is divided into a number of epochs, where each epoch represents a generation of the transaction system with its unique Master process.
+
+For each epoch, the Master initiates recovery in several steps. First, the Master reads the previous transaction system states from Coordinators and lock the coordinated states to prevent another Master process from recovering at the same time. Then the Master recovers previous transaction system states, including all Log Servers’ Information, stops these Log Servers from accepting transactions, and recruits a new set of Proxies, Resolvers, and Transaction Logs. After previous Log Servers are stopped and new transaction system is recruited, the Master writes the coordinated states with current transaction system information. Finally, the Master accepts new transaction commits.
+
+Because Proxies and Resolvers are stateless, their recoveries have no extra work. In contrast, Transaction Logs save the logs of committed transactions, and we need to ensure all previously committed transactions are durable and retrievable by storage servers. That is, for any transactions that the Proxies may have sent back commit response, their logs are persisted in multiple Log Servers (e.g., three servers if replication degree is 3).
 
 ## Resources
 
@@ -81,3 +92,5 @@ Note that the client cannot simply ask the master for read versions. The master 
 [Summit Presentation](https://www.youtube.com/watch?list=PLbzoR-pLrL6q7uYN-94-p_-Q3hyAmpI7o&v=EMwhsGsxfPU&feature=emb_logo)
 
 [Data Distribution Documentation](https://github.com/apple/foundationdb/blob/master/design/data-distributor-internals.md)
+
+[Recovery Documentation: recovery-internals.md]
