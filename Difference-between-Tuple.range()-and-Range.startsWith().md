@@ -3,7 +3,7 @@ There are multiple api's available to define a range to fetch keys from the data
 Tuple.range()
 Range.startsWith(tuple.pack())
 
-Just for reference: here is the code snippet for both the methods:
+Just for reference: here is the code snippet for both the methods from the java bindings:
 ```
 Tuple::
 	public Range range() {
