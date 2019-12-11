@@ -1,7 +1,7 @@
 There are multiple api's available to define a range to fetch keys from the database. Two such options are
 
-1. Tuple.range()
-2. Range.startsWith(tuple.pack())
+> 1. Tuple.range()
+> 2. Range.startsWith(tuple.pack())
 
 Just for reference: here is the code snippet for both the methods from the java bindings:
 ```
