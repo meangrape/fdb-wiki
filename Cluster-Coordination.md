@@ -74,6 +74,54 @@ This section describes several concepts implemented within FoundationDB that hel
 
 ## FailureMonitor
 
+FailureMonitor is the mechanism used to detect failed nodes. A node is globally marked as failed if it doesn't talk to the cluster controller for more than 4 seconds (this is a bit simplified - consult the implementation `failureDetectionServer` to get a more precise definition). This means that the cluster controller is the authority that marks nodes as down.
+
+FailureMonitor is implemented as a client and server pair. The cluster controller runs the server (`failureDetectionServer` in `fdbserver/ClusterController.actor.cpp`) and every worker runs the client (`failureMonitorClient` in `fdbclient/FailureMonitorClient.actor.cpp`). Clients also used run a version of the failure monitor but with less functionality - in more recent versions clients don't rely on this mechanism anymore (client functionality is not discussed in this document).
+
+When a worker starts up, it starts the failure monitor client, which will send a request to the failure detection server (running in CC). It will receive a list of addresses as a response and all addresses are considered to be up. It will continue to send this request every 100ms and will get a diff of addresses that the CC considers to be up. 
+
+The main feature one gets from this is that each worker will maintain a list of addresses that it considers being up. Therefore, even if a worker can not communicate with another worker, it won't mark it as failed unless the failure monitor marks it as failed.
+
 ## WaitFailure
 
-## Ping
+### Sidetrack: How `broken_promise` works across the Network
+
+A `Future` will be set to `broken_promise` if all promises associated with it get destroyed. So if you `wait` on such a future this error will be thrown.
+
+It is important to understand that this also works for futures if the corresponding `ReplyPromise` was sent to another process. This is implemented in `networkSender` (can be found in `fdbrpc/networksender.actor.h`). `networkSender` is an uncancellable actor and it is started whenever we deserialize a `ReplyPromise<T>`. This actor will wait on the Future (for the reply) and send back the result. If it receives a `broken_promise` (or any other error) it will forward this to the remote that holds the corresponding future.
+
+### WaitFailure Server and Client
+
+The failure monitor can be used to detect failed processes (with a possibility to run into false positives). However, failure monitor won't detect whether a remote worker is still executing a certain role. This can be problematic in certain cases: consider the case where the actor that executes the master role dies but the process doesn't. The CC needs to detect this case (so that it can chose a new master and kick off recovery). This is where wait failure comes in.
+
+WaitFailure is implemented as a client/server process. Each server can serve many clients. The implementation can be found in `fdbserver/WaitFailure.actor.cpp`.
+
+### WaitFailure Server
+
+The server part is very simple: `waitFailure` is of type `FutureStream<ReplyPromise<Void>>`. The server will receive `ReplyPromise<Void>` and put that request into a queue. Usually it will never send back an answer (this is not quite correct, as there is an upper limit how large this queue is allowed to grow - but this is only an optimization).
+
+So the only important function of the wait failure server is to hold on to these promises without destroying them. If the caller of `waitFailureServer` dies (and therefore this actor gets cancelled), all clients will receive an error of type `broken_promise`.
+
+### WaitFailure Client
+
+The client combines the concept of promises being able to live on a different machine with the failure monitor.
+
+To detect failing actors it would be sufficient to just send a reply promise to the wait failure server and wait on it. If the corresponding role fails we will receive a `broken_promise`.
+
+However, this will only detect failed roles if the process that runs the role doesn't die as well. But we want to detect both. So instead of just waiting on that request, we also wait on the failure monitor. So for wait failure client to return one of two conditions must be true:
+
+1. The client sent back a `broken_promise` or
+2. `FailureMonitor` marked the remote as being down.
+
+The problem with 2 is that it is timeout based and we could therefore see false positives. There are two counter measures:
+
+1. We need to make sure, that whenever we use wait failure, that it also works if there is a false positive. As a consequence, a false positive will cause the cluster to do unnecessary work, but it mustn't introduce any bugs.
+2. If we do something that is very expensive as a result of a failure, we might want to wait a bit longer before we start.
+
+The first is the responsibility of the developers. For the second we can pass a reaction time and a reaction slope. The implementation of `waitFailureClient` calls into `RequestStream<T>::getReplyUnlessFailedFor` in order to achieve that. This function will wait on the future and the failure monitor.
+
+## Connection Monitor
+
+We now have the ability to detect global failures and to detect actor failures of a non-failed process. However, we could still run into the issue that two processes can't talk to each other because of a local network partition.
+
+For that purpose we start a connection monitor (`connectionMonitor` in `fdbrpc/FlowTransport.actor.cpp`) for each open connection. This connection monitor will ping the remote every second and close the connection after a timeout (marking the connection as failed - not the host).
