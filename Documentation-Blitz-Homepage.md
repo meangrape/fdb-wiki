@@ -14,6 +14,7 @@
 
 # General Ops Knowledge
 * https://github.com/apple/foundationdb/wiki/Cluster-reaction-to-failures
+* https://github.com/apple/foundationdb/wiki/Handling-of-Storage-Server-Drive-Failures
 
 # Configuration
 
