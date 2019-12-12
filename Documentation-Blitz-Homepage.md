@@ -66,3 +66,4 @@
 * https://github.com/apple/foundationdb/wiki/Difference-between-Tuple.range()-and-Range.startsWith()
 
 # Layer Concept
+* https://github.com/apple/foundationdb/wiki/Best-way-to-add-an-index-on-already-existing-data
