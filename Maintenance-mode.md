@@ -1,4 +1,4 @@
-There are scenarios like hardware upgrade, rack upgrade, etc., where some machines may need to be taken offline. After the work is done, these machines are brought back online. It may be desirable to not trigger a large scale data distribution while the machines are offline. FoundationDB has a maintenance mode where the user can notify the database that a particular zone is going to maintenance and not trigger data distribution due to offline machines in this particular zone. 
+There are scenarios like hardware upgrade, rack upgrade, etc., where some machines may need to be taken offline. After the work is done, these machines are brought back online. It may be desirable to not trigger a large scale data distribution while the machines are offline. FoundationDB has a maintenance mode where the user can notify the database that a particular zone is going for maintenance and not trigger data distribution due to offline machines in that particular zone. 
 
 fdbcli tool has a command to initiate maintenance mode
 
