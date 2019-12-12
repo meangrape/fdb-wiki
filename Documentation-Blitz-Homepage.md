@@ -10,6 +10,7 @@
 # Administration
 
 * [Understanding FoundationDB Log Files](https://github.com/apple/foundationdb/wiki/Understanding-FoundationDB-Log-Files)
+* https://github.com/apple/foundationdb/wiki/Maintenance-mode
 
 # General Ops Knowledge
 * https://github.com/apple/foundationdb/wiki/Cluster-reaction-to-failures
