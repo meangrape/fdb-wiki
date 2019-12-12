@@ -1,6 +1,7 @@
 # Architecture
 
 * [Technical Overview of the Database](https://github.com/apple/foundationdb/wiki/Technical-Overview-of-the-Database)
+* [Cluster Coordination] (https://github.com/apple/foundationdb/wiki/Cluster-Coordination)
 
 # FoundationDB Internals
 
