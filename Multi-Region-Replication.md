@@ -141,3 +141,28 @@ In locations that are only serving as satellites, you will only need to run log 
 It's generally best to run and recruit the same number of logs in the satellites that you have in the main DC. This will help to avoid performance and disk space issues when you're running in a degraded state where one of the main DCs is unavailable. In the happy case, you should be fine recruiting about 1/3 as many satellite logs as main logs.
 
 If you are running a 3-DC config, you should be aware that there will be some situations where a data center needs to serve as a main DC and a satellite DC at the same time. This will require provisioning enough logs to be able to handle the number you are going to be recruiting for each of these rules. In this scenario you can either recruit the same number of main logs and satellite logs, which means you would need to provision twice as many, or recruit fewer satellite logs than main logs, which means that you could run into problems if you ran with only 2 DCs up for an extended period of time.
+
+## Changing Region Configuration
+
+When you change region configuration, the database applies additional checks to make sure that the change is safe and well-defined.
+
+1. You cannot change the `usable_regions` setting and the `regions` setting in the same configuration command.
+2. You cannot change the `usable_regions` setting when you have more than one region with priority >= 0. Another way of putting this is that you cannot change the `usable_regions` setting when automatic failover is enabled.
+
+As a consequence of these checks, changing region configurations can be a multi-step process that must be carefully managed. After making a configuration change, you should wait for the database to become healthy to confirm that the replication changes and data movement have finished.
+
+### Example: Going from 1 region to 2 regions
+
+1. Add second region with `priority: -1`.
+2. Set `usable_regions=2`
+3. Change priority on second region to `0`.
+
+### Example: Going from 2 regions to 1 region
+
+1. Set priority on second region to `-1`.
+2. Set `usable_regions=1`.
+3. Remove second region
+
+### Example: Moving secondary region to a different data center
+
+Because FoundationDB only supports a maximum of 2 regions, if you want to change the data center for one of the regions, you must go down to a single region before adding the new region. To change the secondary region to a different data center, you would follow the steps for "Going from 2 regions to 1 region", then follow the steps for "Going from 1 region to 2 regions".
