@@ -46,8 +46,8 @@
 
 **TLogMetrics**
 
-* BytesInput
-* BytesDurable
+The difference between `BytesInput` and `BytesDurable` is the amount of memory the TLog is using. Multiple TLogs can be recruited on the same process, but only one of them can be active. `SharedBytesInput` and `SharedBytesDurable` represent the combined memory used by all TLogs on the same process. Once this difference reaches 1.1GB batch priority transactions will be throttled. Once it reaches 1.5GB the TLog will start take writing mutations from memory to disk. Future reads for these mutations will need to read them from disk. Once this difference reaches 2.0GB Ratekeeper will start slowing down client traffic, with the goal of ensuring TLog memory does not exceed 2.4GB. `SharedOverheadBytesInput` and `SharedOverheadBytesDurable` show the amount of memory being used on overhead, and should generally be much smaller than the total amount of memory in use.
+
 * Version
 * QueueCommittedVersion
 * PersistentDataVersion
@@ -56,10 +56,6 @@
 * MinPoppedTagVersion
 * MinPoppedTagLocality
 * MinPoppedTagId
-* SharedBytesInput
-* SharedBytesDurable
-* SharedOverheadBytesInput
-* SharedOverheadBytesDurable
 * KvstoreBytesUsed
 * KvstoreBytesFree
 * KvstoreBytesAvailable
