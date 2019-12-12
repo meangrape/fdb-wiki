@@ -1,4 +1,4 @@
-FoundationDB has many replication modes which can handle a certain amount of failures. In this post, data replication across storage servers is considered. A double replication mode can handle one storage server (SS) drive failure and triple replication can handle two storage server (SS) drive failures. FoundationDB doesn't employ any erasure coding and relies on fully replicated data on different drives.
+FoundationDB has many replication modes which can handle a certain amount of failures. In this post, data replication across storage servers is considered. A double replication mode can handle one storage server (SS) drive failure and triple replication can handle two storage server (SS) drive failures. FoundationDB doesn't employ any erasure coding and fully replicates data on to different drives.
 
 In case a SS drive failure is detected, FoundationDB automatically handles restoring replicating the lost data through its data distribution subcomponent. Key ranges that were affected by the loss will be assigned to a new team of servers. Until the data is re-replicated, status will report decreased failure tolerance.
 
