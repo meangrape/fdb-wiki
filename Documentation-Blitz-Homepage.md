@@ -12,6 +12,10 @@
 * [Understanding FoundationDB Log Files](https://github.com/apple/foundationdb/wiki/Understanding-FoundationDB-Log-Files)
 * https://github.com/apple/foundationdb/wiki/Maintenance-mode
 
+# Cluster Troubleshooting
+
+* https://github.com/apple/foundationdb/wiki/Troubleshooting-Failure-to-Launch-Processes
+
 # General Ops Knowledge
 * https://github.com/apple/foundationdb/wiki/Cluster-reaction-to-failures
 * https://github.com/apple/foundationdb/wiki/Handling-of-Storage-Server-Drive-Failures
@@ -19,11 +23,15 @@
 # Configuration
 
 * https://github.com/apple/foundationdb/wiki/Running-FoundationDB-in-the-Cloud
+* https://github.com/apple/foundationdb/wiki/Guidelines-for-Choosing-Coordinators
 
 # Benchmarking
 
 # Features
 
+# Datacenter Failover
+
+* https://github.com/apple/foundationdb/wiki/Multi-Region-Replication
 # Command Line Interface
 
 # TLS
