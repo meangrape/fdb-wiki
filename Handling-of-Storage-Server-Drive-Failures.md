@@ -6,4 +6,4 @@ A storage server detects drive failures when it is not able to read/write data t
 
 To detect the case of silent data corruption on cold data, FoundationDB recommends the user to run a [consitencychecker](https://github.com/apple/foundationdb/blob/8bf67c7afc7082e131ea8a02ae22f5635c3f683a/fdbserver/workloads/ConsistencyCheck.actor.cpp) that continuously reads all the data from the database at a modest rate and report any data consistency failures. Please note that the user has to manually start the consistency checker and can be invoked as
 
-> fdbserver -r consistencycheck 
+> fdbserver -r consistencycheck ...
