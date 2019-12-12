@@ -18,4 +18,4 @@ will display any ongoing maintenance. Calling this command with off will
 disable maintenance.
 ```
 
-The user has to be careful to offline machines only on the particular zone that the maintenance mode is initiated for. Once the offline machines are brought online, the storage servers will begin to catch up.
+The user has to be careful to offline machines only on the particular zone that the maintenance mode is initiated for, otherwise data distribution can get triggered. Once the offline machines are brought online, the storage servers will begin to catch up.
