@@ -1,6 +1,6 @@
 # Architecture
 
-[Technical Overview of the Database](https://github.com/apple/foundationdb/wiki/Technical-Overview-of-the-Database)
+* [Technical Overview of the Database](https://github.com/apple/foundationdb/wiki/Technical-Overview-of-the-Database)
 
 # FoundationDB Internals
 
@@ -8,6 +8,8 @@
 * https://github.com/apple/foundationdb/wiki/Building
 
 # Administration
+
+* [Understanding FoundationDB Log Files](https://github.com/apple/foundationdb/wiki/Understanding-FoundationDB-Log-Files)
 
 # General Ops Knowledge
 * https://github.com/apple/foundationdb/wiki/Cluster-reaction-to-failures
