@@ -48,7 +48,7 @@
 # Go API
 
 # Python API
-
+*https://github.com/apple/foundationdb/wiki/TransactionRead-in-official-Python-bindings
 # Java API
 
 # C API
