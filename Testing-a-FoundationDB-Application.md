@@ -138,9 +138,11 @@ def test_cardinality(db):
     debug_cardinality(db, b'mySet')
 ```
 
-# Exercise the retry loop
+# Exercising the retry loop
 
-We can use [client side buggify](https://apple.github.io/foundationdb/client-testing.html) to increase our test coverage with a simple change to our test fixture.
+A possible bug in the implementation of `add_item` is to increment the count even if the key is already present, but currently our test will not catch this bug.
+
+We can use [client buggify](https://apple.github.io/foundationdb/client-testing.html) to increase our test coverage with a simple change to our test fixture.
 
 ```
 @pytest.fixture(scope='function')
@@ -156,4 +158,6 @@ def db():
     del db[b'':b'\xff']
 ```
 
-This will cause your transaction retry attempts to backoff as if the cluster were under high load, so to speed up your tests you may want to consider lowering the [max retry delay](https://apple.github.io/foundationdb/api-python.html#fdb.Database.options.set_transaction_max_retry_delay).
+Now our test will catch the bug (you may need to run the test a few times)
+
+This will cause your transaction retry attempts to backoff as if the cluster were under high load, so to speed up your tests you may want to consider lowering the [max retry delay](https://apple.github.io/foundationdb/api-python.html#fdb.Database.options.set_transaction_max_retry_delay) in your db fixture (again make sure you're using a test-only database, where a lower retry delay is appropriate).
