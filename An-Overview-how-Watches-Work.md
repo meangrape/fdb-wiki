@@ -18,4 +18,4 @@ If a client fails, the storage will keep that watch until it will be triggered t
 
 # Server Failures
 
-Watches on storage servers are ephemeral. So if a storage server fails, it will lose all current watches. 
+Watches on storage servers are ephemeral. So if a storage server fails, it will lose all current watches. While clients are waiting for a watch reply, they will ping the server (by default once a second) - if this times out they will automatically reregister the watch on a different server.
