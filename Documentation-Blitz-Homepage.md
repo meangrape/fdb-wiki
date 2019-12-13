@@ -16,6 +16,7 @@
 # Cluster Troubleshooting
 
 * https://github.com/apple/foundationdb/wiki/Troubleshooting-Failure-to-Launch-Processes
+* https://github.com/apple/foundationdb/wiki/Migrating-to-New-Machines
 
 # General Ops Knowledge
 * https://github.com/apple/foundationdb/wiki/Cluster-reaction-to-failures
