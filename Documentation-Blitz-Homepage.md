@@ -29,6 +29,7 @@
 
 * https://github.com/apple/foundationdb/wiki/Running-FoundationDB-in-the-Cloud
 * https://github.com/apple/foundationdb/wiki/Guidelines-for-Choosing-Coordinators
+* https://github.com/apple/foundationdb/wiki/Storage-servers-per-disk
 
 # Benchmarking
 
