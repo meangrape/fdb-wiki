@@ -5,6 +5,8 @@
 
 # FoundationDB Internals
 
+* [Storage Queue](https://github.com/apple/foundationdb/wiki/Storage-Queue)
+
 # Extending FoundationDB
 * https://github.com/apple/foundationdb/wiki/Building
 * https://github.com/apple/foundationdb/wiki/Testing-a-FoundationDB-application
