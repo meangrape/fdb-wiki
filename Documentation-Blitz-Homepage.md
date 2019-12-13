@@ -7,6 +7,7 @@
 
 # Extending FoundationDB
 * https://github.com/apple/foundationdb/wiki/Building
+* https://github.com/apple/foundationdb/wiki/Testing-a-FoundationDB-application
 
 # Administration
 
