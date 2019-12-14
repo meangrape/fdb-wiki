@@ -91,6 +91,19 @@ Note the proxy sends each resolver their respective key ranges, if any one of th
 
 
 ![](https://aws1.discourse-cdn.com/foundationdb/original/1X/2ba462a1102390fbd0cca88c06d3cb25f485cde5.jpeg)
+
+### Background Work
+
+There are a number of background work happening besides the transaction processing:
+
+- **Ratekeeper** collects statistic information from proxies, transaction logs, and storage servers and compute the target transaction rate for the cluster.
+
+- **Data distribution** monitors all storage servers and perform load balancing operations to evenly distribute data among all storage servers.
+
+- **Storage servers** pull mutations from transaction logs, write them into storage engine to persist on disks.
+
+- **Proxies** periodically send empty commits to transaction logs to keep commit versions increasing, in case there is no client generated transactions.
+
 ![](https://aws1.discourse-cdn.com/foundationdb/original/1X/39ef9f39ff6a382818f9386aa4538be4f80a6fdc.jpeg)
 
 ### Transaction System Recovery
