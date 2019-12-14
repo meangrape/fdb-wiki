@@ -71,17 +71,39 @@ The reason for checking a set of transaction logs satisfying replication policy 
 Note that the client cannot simply ask the master for read versions. The master gives out versions to proxies to be committed, but the master does not know when the versions it gives out are durable on the transaction logs. Therefore it is not safe to do reads at the largest version the master has provided because that version might be rolled back in the event of a failure, so the client could end up reading data that was never committed. In order for the client to use versions from the master, the client needs to wait until all in-flight transaction-batches (a write version is used for a batch of transactions) to commit. This can take a long time and thus is inefficient. Another drawback of this approach is putting more work towards the master, because the master role can’t be scaled. Even though giving out read-versions isn’t very expensive, it still requires the master to get a transaction budget from the Ratekeeper, batches requests, and potentially maintains thousands of network connections from clients.
 
 ![](https://aws1.discourse-cdn.com/foundationdb/original/1X/cf8c5fc2f9f5675055c05610bc495f5b760444e1.jpeg)
+
+### Transaction Commit
+
+A client transaction commits in the following steps:
+
+1. A client sends a transaction to a proxy.
+1. The proxy asks the master for a commit version.
+1. The master sends back a commit version that is higher than any commit version seen before.
+1. The proxy sends the read and write conflict ranges to the resolver(s) with the commit version included.
+1. The resolver responds back with whether the transaction has any conflicts with previous transactions by sorting transactions according to their commit versions and computing if such a serial execution order is conflict-free.
+   *  If there are conflicts, the proxy responds back to the client with a not_committed error.
+   *  If there are no conflicts, the proxy sends the mutations and commit version of this transaction to the transaction logs.
+1. Once the mutations are durable on the logs, the proxy responds back success to the user.
+
+Note the proxy sends each resolver their respective key ranges, if any one of the resolvers detects a conflict then the transaction is not committed. This has the flaw that if only one of the resolvers detects a conflict, the other resolver will still think the transaction has succeeded and may failure future transactions with overlapping write conflict ranges, even though these future transaction can commit. In practice, a well designed workload will only have a very small percentage of conflicts, so this amplification will not effect performance. Additionally, each transaction has a five seconds window. After five seconds, resolvers will remove the conflict ranges of old transactions, which also limits the chance of this type of false conflict.
+
 ![](https://aws1.discourse-cdn.com/foundationdb/original/1X/df2fa96cbdc35a482e2726a5f786be69dc5fc4a6.jpeg)
+
+
 ![](https://aws1.discourse-cdn.com/foundationdb/original/1X/2ba462a1102390fbd0cca88c06d3cb25f485cde5.jpeg)
 ![](https://aws1.discourse-cdn.com/foundationdb/original/1X/39ef9f39ff6a382818f9386aa4538be4f80a6fdc.jpeg)
 
 ### Transaction System Recovery
 
-The transaction system implements the write pipeline of the FoundationDB cluster and its performance is critical to the transaction commit latency. Whenever there is a failure in the transaction system, a recovery process is performed to restore the transaction system to a new configuration, i.e., a clean state. Specifically, the Master process monitors the health of Proxies, Resolvers, and Transaction Logs. If any one of the monitored process failed, the Master process terminates. The Cluster Controller will detect this event, and then recruits a new Master, which coordinates the recovery and recruits a new transaction system instance. In this way, the transaction processing is divided into a number of epochs, where each epoch represents a generation of the transaction system with its unique Master process.
+The transaction system implements the write pipeline of the FoundationDB cluster and its performance is critical to the transaction commit latency. A typical recovery takes about a few hundred milliseconds, but longer recovery time (usually a few seconds) can happen. Whenever there is a failure in the transaction system, a recovery process is performed to restore the transaction system to a new configuration, i.e., a clean state. Specifically, the Master process monitors the health of Proxies, Resolvers, and Transaction Logs. If any one of the monitored process failed, the Master process terminates. The Cluster Controller will detect this event, and then recruits a new Master, which coordinates the recovery and recruits a new transaction system instance. In this way, the transaction processing is divided into a number of epochs, where each epoch represents a generation of the transaction system with its unique Master process.
 
-For each epoch, the Master initiates recovery in several steps. First, the Master reads the previous transaction system states from Coordinators and lock the coordinated states to prevent another Master process from recovering at the same time. Then the Master recovers previous transaction system states, including all Log Servers’ Information, stops these Log Servers from accepting transactions, and recruits a new set of Proxies, Resolvers, and Transaction Logs. After previous Log Servers are stopped and new transaction system is recruited, the Master writes the coordinated states with current transaction system information. Finally, the Master accepts new transaction commits.
+For each epoch, the Master initiates recovery in several steps. First, the Master reads the previous transaction system states from Coordinators and lock the coordinated states to prevent another Master process from recovering at the same time. Then the Master recovers previous transaction system states, including all Log Servers’ Information, stops these Log Servers from accepting transactions, and recruits a new set of Proxies, Resolvers, and Transaction Logs. After previous Log Servers are stopped and new transaction system is recruited, the Master writes the coordinated states with current transaction system information. Finally, the Master accepts new transaction commits. See details in this [documentation]().
 
 Because Proxies and Resolvers are stateless, their recoveries have no extra work. In contrast, Transaction Logs save the logs of committed transactions, and we need to ensure all previously committed transactions are durable and retrievable by storage servers. That is, for any transactions that the Proxies may have sent back commit response, their logs are persisted in multiple Log Servers (e.g., three servers if replication degree is 3).
+
+Finally, a recovery will *fast forward* time by 90s, which would abort any in-progress client transactions with `transaction_too_old` error. During retry, these client transactions will find the transaction system and commit.
+
+** `commit_result_unknown` error: ** If a recovery happened while a transaction is committing (i.e., a proxy has sent mutations to transaction logs). A client would have received `commit_result_unknown`, and then retried the transaction. It’s completely permissible for FDB to commit both the first attempt, and the second retry, as `commit_result_unknown` means the transaction may or may not have committed. This is why it’s strongly recommended that transactions should be idempotent, so that they handle `commit_result_unknown` correctly.
 
 ## Resources
 
