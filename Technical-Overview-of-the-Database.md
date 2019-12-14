@@ -93,4 +93,4 @@ Because Proxies and Resolvers are stateless, their recoveries have no extra work
 
 [Data Distribution Documentation](https://github.com/apple/foundationdb/blob/master/design/data-distributor-internals.md)
 
-[Recovery Documentation: recovery-internals.md]
+[Recovery Documentation](https://github.com/apple/foundationdb/blob/master/design/recovery-internals.md)
