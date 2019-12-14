@@ -6,6 +6,7 @@
 # FoundationDB Internals
 
 * [Storage Queue](https://github.com/apple/foundationdb/wiki/Storage-Queue)
+* [Storage Server Shard Boundary Change](https://github.com/apple/foundationdb/wiki/Storage-Server-Shard-Boundary-Change)
 
 # Extending FoundationDB
 * https://github.com/apple/foundationdb/wiki/Building
