@@ -53,6 +53,7 @@
 # Using FoundationDB Clients
 * https://github.com/apple/foundationdb/wiki/Transaction-size-limit
 # Go API
+* [Implement an Atomic Counter using Go Bindings](https://github.com/apple/foundationdb/wiki/Implement-an-Atomic-Counter-using-Go-Bindings)
 
 # Python API
 * https://github.com/apple/foundationdb/wiki/TransactionRead-in-official-Python-bindings
