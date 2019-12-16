@@ -16,6 +16,7 @@
 
 * [Understanding FoundationDB Log Files](https://github.com/apple/foundationdb/wiki/Understanding-FoundationDB-Log-Files)
 * https://github.com/apple/foundationdb/wiki/Maintenance-mode
+* https://github.com/apple/foundationdb/wiki/Upgrading-FoundationDB
 
 # Cluster Troubleshooting
 
