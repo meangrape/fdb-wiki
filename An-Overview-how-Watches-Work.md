@@ -10,12 +10,16 @@ Let's assume you want to be informed whenever the value for a certain key change
 
 ```
 @fdb.transactional
-def watch_key(tr, key, value, watch_sleep_time):
-    while true:
-        v = tr[key]
-        if v != value:
-            return v
-        time.sleep(watch_sleep_time)
+def key_changed(tr, key, value):
+    v = tr[key]
+    if v != value:
+        return True
+    return False
+
+def watch_key(db, key, value, watch_sleep_time):
+    while not key_changed(db, key, value):
+        sleep(watch_sleep_time)
+        
 ```
 
 So this will just query the value in a loop and return as soon as the value changed (and keeps changed long enough for it to be observable). If you use this method you will quickly find that finding a good value for `watch_sleep_time` is very hard: if the value is very small each watch will put significant load onto the storages within the cluster. If the value is too large, it will take much longer until a change is observed.
