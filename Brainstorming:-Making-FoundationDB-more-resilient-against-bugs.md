@@ -16,4 +16,4 @@ It has two benefits:
 a) Crashing the system early when invariant is violated can help uncover potential data corruption situation.  
 b) The invariant failure can help uncover the root cause of a simulation failure and production failure. This saves time both in development and in production error diagnosis.
 
-This requires code change and expertise in each component. It can be hard to find these invariants. 
+This requires code change and expertise in each component. It can be hard to find these invariants. Linux kernel development uses invariants to crash the system early instead of letting a system wobble in undetermined state.
