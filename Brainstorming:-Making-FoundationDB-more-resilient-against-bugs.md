@@ -17,3 +17,17 @@ a) Crashing the system early when invariant is violated can help uncover potenti
 b) The invariant failure can help uncover the root cause of a simulation failure and production failure. This saves time both in development and in production error diagnosis.
 
 This requires code change and expertise in each component. It can be hard to find these invariants. Linux kernel development uses invariants to crash the system early instead of letting a system wobble in undetermined state.
+
+# Idea 2: Add verification Engine
+
+This is a similar to idea 1 but might go a bit farther.
+
+The proxies currently keep the txnStateStore in memory and every transaction (whether system- or user-transaction) has to go through a proxy. Additionally, every message written to a TLog is written by a proxy.
+
+This means that we could use (and maybe additionally introduce) some data redundancy in the txnStateStore that would allow us to do further verification. After we resolved a batch of transactions we could then run every batch through this verification engine. Afterwards we could also run all TLog message through this engine before we actually write to the tlog. This would allow us to catch certain type of bugs early and simply crash the proxy before we write anything to a disk.
+
+Examples for things we could verify:
+
+* We could verify that we don't duplicate messages to a tag.
+* We could verify that shard assignment messages and private mutations go to tags that make sense (for example when removing a shard from a tag, we can double-check there that this corresponds to the shard-mapping we currently have).
+* For replication factor `N`, we could verify that every non-private message goes to at least `N` number of tags and `N` number of tlogs and that we don't violate the replication policy.
