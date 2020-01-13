@@ -19,7 +19,7 @@ Also as part of this feature, language binding implementations for RPC clients w
 * Client - An application, script, etc. that connects to and runs transactions against the cluster.
 * FoundationDB client library - The native C library that currently provides the only way for clients to communicate with a FoundationDB cluster. The version of the library must match the version of the cluster, and any higher level language bindings are required to utilize this library (e.g. by using JNI in Java).
 * Multi-version client - An API that provides the ability for a client to load multiple different FoundationDB client libraries at different versions. By configuring the multi-version client appropriately, clients are able to continue operating during an upgrade of the cluster. However, the details of this configuration are somewhat complicated and unintuitive. See the documentation here (https://apple.github.io/foundationdb/api-general.html#multi-version-client-api).
-* Read your writes - The FoundationDB client library provides the ability to read values previously read or written in the same transaction from cache without interacting with the cluster. Doing so greatly reduces the cost of the read, but at the cost of implementation complexity in the client library. 
+* Read your writes - The FoundationDB client library provides the ability to read values previously read or written in the same transaction from cache without interacting with the cluster. Because writes are not sent to the cluster until commit time, the ability to read mutations from this cache is required in order for a transaction to be able to read the writes it has made. The cache also provides a significant performance benefit when reading these keys but comes with the cost of significant implementation complexity in the client library. 
 * Cluster file - A file containing a connection string that is required in order to connect to the cluster. This consists of two identifier strings and a list of the coordinators in the cluster. See the documentation here (https://apple.github.io/foundationdb/administration.html#cluster-files).
 
 ## Background
@@ -54,6 +54,7 @@ There are other potential benefits that can be exposed by an RPC layer:
 
 1. Assuming that the RPC endpoints are at known locations and an external discovery mechanism exists, it may not be necessary for clients to have the cluster file in order to connect to the cluster.
 2. Rather than having every client application connecting to various processes in the cluster (proxies, storage, coordinators), these processes will instead connect to the RPC instances. This can help us to increase the number of clients supported by a cluster, depending on how many clients each RPC instance can support.
+3. Having a well defined RPC boundary could make it easier to create a simple mock implementation of FoundationDB that can be used for testing, etc.
 
 ## Testing
 
@@ -94,7 +95,7 @@ The RPC layer will have a contract with at least the following requirements and 
 
 There will be an additional performance cost associated with having to perform an extra hop between the client and the cluster. We expect the latency cost for this to be small (estimated 0.5ms upper bound) for each operation.
 
-Operations that would be performed locally in the FoundationDB client library need to avoid introducing an extra serial RPC call when possible. An exception to this is with the read-your-writes cache, which will not be locally available on clients. Instead, reading values that have already be read or written will now require an RPC call.
+Operations that would be performed locally in the FoundationDB client library need to avoid introducing an extra serial RPC call when possible. There are exceptions to this, such as with reads to the read-your-writes cache, which will not be locally available on clients. Instead, reading values that have already be read or written will now require an RPC call. Other operations, such as reading the current transaction size, may also require an extra round trip in at least some cases.
 
 Throughput of a single RPC server process should be comparable to that of a single client process using the FoundationDB client library directly. Client processes may be able to drive more load than before, as they will not have to worry about saturating the network thread.
 
@@ -149,6 +150,7 @@ New metrics/monitoring required:
 * Locality-aware fault tolerance of RPC server processes
 * Cluster awareness of the dependence on RPC server processes (i.e. it should be knowable at some level whether the client is using the RPC server processes and would therefore require them to be present for availability).
 * Counters for the various operations performed on each RPC server process (e.g. number of transactions, reads, mutations, commits, etc.)
+* Latencies of different operation types as observed from the RPC processes. This could be used as a more accurate replacement for the cluster-side measurements used to measure against latency SLOs. In particular, it would include more parts of the request chain without being subjected to client-side effects.
 * Statistics about the clients connected to a cluster via the RPC server processes
 * The ability of RPC processes to connect to the cluster
 * Maybe: version compatibility of each instance with the cluster
