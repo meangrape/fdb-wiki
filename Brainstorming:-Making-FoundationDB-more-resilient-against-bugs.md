@@ -31,3 +31,12 @@ Examples for things we could verify:
 * We could verify that we don't duplicate messages to a tag.
 * We could verify that shard assignment messages and private mutations go to tags that make sense (for example when removing a shard from a tag, we can double-check there that this corresponds to the shard-mapping we currently have).
 * For replication factor `N`, we could verify that every non-private message goes to at least `N` number of tags and `N` number of tlogs and that we don't violate the replication policy.
+
+# Idea 3: Buggify++ (Bug Injection in Simulation)
+
+Similar to buggify, we could introduce byzantine failures in several places of the code (for example, in the serialization code we could randomly deserialize wrong data). As FDB is by definition not resilient against these kind of failures, test runs will need to run differently. This is what I would imagine could work well:
+
+1. We would run a simulation without bug injection enabled and run `SaveAndKill` at the end.
+1. We would then run a restart test with bug injection enabled. In this run, we would ignore all Sev 40s (as they are excpected) and we won’t expect any progress. Basically the hope is that this will crash at most but it won’t change the on disk state in any harmful way.
+1. Last there would be another restart test. This would then verify that no data corruption has happened in the previous run.
+
