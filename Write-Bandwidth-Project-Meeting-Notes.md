@@ -1,3 +1,14 @@
+### 3/25/2020
+
+* Rusty's updates
+  * Initial results from network loop optimization resulted in a 1%-2% speedup
+  * Next focus will be on storage server optimizations 
+* Daniel's benchmarking run results
+  * Tracing of DebugCommit doesn't seem to show large pipelining waits
+  * AWS seems to show ~0.1ms for within AZ, and ~0.3ms and ~0.7ms for across different AZs
+  * Adding more clients now shows storage server saturation
+  * Will continue to run more benchmarks, take and forward profiles to others to examine more closely
+
 ### 3/18/2020
 
 * Pipelining
