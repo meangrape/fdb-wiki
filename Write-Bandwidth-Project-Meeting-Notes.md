@@ -1,3 +1,18 @@
+### 4/1/2020
+
+* Storage server profiles show 25% CPU time in operator<
+  * Rusty's approach: [reduce the number of calls to operator< made by lower_bound and upper_bound](https://github.com/apple/foundationdb/pull/2882)
+  * Daniel's approach: [Pass StringRef by value in comparison operators ](https://github.com/apple/foundationdb/pull/2875)
+  * Rusty has a larger change in the works to move from operator< to operator<=> for more gains
+  * Taking an `ssd` profile again would be good?
+  * Try tweaking knobs to lower the number of versions a storage server keeps in memory to see what effect that has
+* Proxy CPU
+  * Had used debug transaction to build up stats on where time is going in commits
+  * Looked like more time is spent batching transactions on proxy than in TLogs
+  * Exploring ways to cheat the commit path, and drop strict serializability if desired
+  * Policy engine optimizations might have a large impact on proxy cpu time
+* Will continue adding more debug transactions to get better pipeline visualization
+
 ### 3/25/2020
 
 * Rusty's updates
