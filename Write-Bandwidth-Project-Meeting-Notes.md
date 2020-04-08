@@ -2,19 +2,19 @@
 
 * Storage server profiling and optimizations
   * Daniel and Rusty have both not found low hanging fruit to further optimize
-  * *Daniel* to run and profile a test with Rusty's three way comparison merged
+  * **Daniel** to run and profile a test with Rusty's three way comparison merged
   * 5% of CPU time spent allocating std::vector, but unsure if there's a good way to reduce that
 * Daniel seeing stalls during performance tests
   * Are there recoveries?  OOMs?  Seems not.
   * Likely Ratekeeper?
-  * *Alex* to connect with Segment folk about getting FoundationDB metrics into Datadog.  (Sent!)
+  * **Alex** to connect with Segment folk about getting FoundationDB metrics into Datadog.  (Sent!)
 * P-Tree improvements/rewrites
   * Daniel chatting with Steve about if there's a better datastructure to use than the existing P-Tree
   * Neelam's previous investigation suggested that there's no low-hanging optimizations to do on the P-Tree itself
   * Persistent Adaptive Radix Tree might be a good candidate
   * (Persistent in the versioned sense, and not persistent as in disk.)
   * [HOPE](https://arxiv.org/pdf/2003.02391.pdf) would maybe be useful to reduce in-memory size of data?
-    * *Rusty* to bug Pavlo about releasing the code 
+    * **Rusty** to bug Pavlo about releasing the code 
 * New Slack channel of #write-throughput-discuss made for this project
 * Proxy optimizations
   * 550micros spent in batching
