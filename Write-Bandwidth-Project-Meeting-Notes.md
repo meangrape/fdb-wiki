@@ -1,3 +1,15 @@
+### 4/15/2020
+
+* [Avoid unnecessary copies in PromiseStream #2915](https://github.com/apple/foundationdb/pull/2915) landed, and mostly resulted in write bandwidth improvements
+* Investigating doing more similar changes
+  * Modifying actor compiler to get perfect forwarding in more places [#2928](https://github.com/apple/foundationdb/issues/2928)
+  * Potentially creating a MovableFuture class, so that one can move out of futures.
+  * A longer discussion occurred on design choices around futures, actor compiler changes, and resumable functions
+  * Eliding copies from reply generation could have similar improvements.
+  * Using a better memcpy implementation resulted in a 5%-10% perf increase.
+    * **Rusty** to look into this after current work is done. Ask **Kao** for brain dump.
+  * [make-linux-fast-again.com](https://make-linux-fast-again.com) to disable kernel security patches when comparing perf across versions
+
 ### 4/8/2020
 
 * Storage server profiling and optimizations
