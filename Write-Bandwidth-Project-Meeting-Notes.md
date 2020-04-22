@@ -12,7 +12,7 @@
   * Will look into RocksDB PR after spending a bit of time on ART
   * Better storage server write throughput is needed, something closer to Memory than Redwood
   * We should check with **Markus**, who mentioned someone on RocksDB might have gone peeking into this
-  * There's still feelings of uncertainty about RocksDB correctness, and FDB simulation testing wouldn't help find them
+  * There's still feelings of uncertainty about RocksDB correctness, and FDB simulation testing wouldn't help find them, as RocksDB would be running on its own threads outside of FDB's control
 
 ### 4/15/2020
 
