@@ -1,3 +1,19 @@
+### 4/22/2020
+
+* Allow moving out of futures and actor compiler changes to reduce copies
+  * [Avoiding unnecessary copies from movable futures](https://forums.foundationdb.org/t/avoiding-unnecessary-copies-from-movable-futures/2076/4)
+  * R-value references are complicated
+* Daniel ran Rusty's ART benchmark
+  * Benchmark used random strings, which biased towards making ART work well
+  * Result was 7x faster, which looks promising 
+  * ART code itself relied on area for memory safety
+  * Struggled to get refcounting on children working right
+* Daniel re-did benchmarks, and found out his target bandwidth is lower than expected.
+  * Will look into RocksDB PR after spending a bit of time on ART
+  * Better storage server write throughput is needed, something closer to Memory than Redwood
+  * We should check with **Markus**, who mentioned someone on RocksDB might have gone peeking into this
+  * There's still feelings of uncertainty about RocksDB correctness, and FDB simulation testing wouldn't help find them
+
 ### 4/15/2020
 
 * [Avoid unnecessary copies in PromiseStream #2915](https://github.com/apple/foundationdb/pull/2915) landed, and mostly resulted in write bandwidth improvements
