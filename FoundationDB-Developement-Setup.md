@@ -128,5 +128,4 @@ We use `clangd` for code navigation and completion. `clangd` is a [language serv
 
 After installing VS Code you have to install the `clangd` plugin. After start VS Code click on the plugin tab:
 
-
-
+![startup](https://user-images.githubusercontent.com/317455/80316907-7598cd00-87b5-11ea-8ad9-aee8e2f6010e.PNG)
