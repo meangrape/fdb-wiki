@@ -126,6 +126,17 @@ ninja
 
 We use `clangd` for code navigation and completion. `clangd` is a [language server](https://langserver.org/) for C++ and can be used by many editors (Emacs, Vim, Atom, etc). This section describes how to set up [Visual Studio Code](https://code.visualstudio.com/) - this is one of the easiest editors to set up.
 
-After installing VS Code you have to install the `clangd` plugin. After start VS Code click on the plugin tab:
+After installing VS Code you have to install the `clangd` extension. After start VS Code click on the extension tab:
 
 ![startup](https://user-images.githubusercontent.com/317455/80316907-7598cd00-87b5-11ea-8ad9-aee8e2f6010e.PNG)
+
+In the search box type `clangd` to search for the extension. You should get exactly one result. After clicking on `Install` you are all done:
+
+![image](https://user-images.githubusercontent.com/317455/80316944-a5e06b80-87b5-11ea-9644-6d382a6d7b0d.png)
+
+Now you should be open to open a folder (`File`->`Open Folder...` or press `Ctrl+k Ctrl+O`) and open the source folder. After opening a C++ file, you should be able to navigate code and use auto completion (it might take a while for all features to work, as `clangd` will need to index the code).
+
+*Warning*: The first time you open a C++ file, VS Code will ask you whether you want to install the C++ extension. Don't install those, they will break stuff!
+
+![image](https://user-images.githubusercontent.com/317455/80317069-6bc39980-87b6-11ea-9ce5-79d0880c4b66.png)
+
