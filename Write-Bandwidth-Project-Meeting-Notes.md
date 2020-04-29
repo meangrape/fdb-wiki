@@ -1,3 +1,17 @@
+### 4/29/2020
+
+* Work continuing Persistent ART
+  * Another ART implementation in HOPE if it's better/faster/more tested
+  * One could maintain an ART of N second windows to re-use the existing Arena-based one.
+  * One could maintain an arena for every N seconds, and then concurrently walk through and remove references into older arenas.
+  * If one maintains version history in values rather than keys, then a single-version structure would work.  Atomic op-heavy workloads would be the worst case for doing this, though.
+  * Entirely different strategy: throw more memory at MVCC buffer?
+* Rusty's tree changes likely to go in soon
+* Rusty comparing memcpy implementations, to hopefully get an overall speedup
+  * It might possibly be worth dusting off the "Align arena memory" PR
+* Trevor has another PR for reducing copies with Futures/Promises
+  * And has more changes planned for reducing copies in the proxy
+
 ### 4/22/2020
 
 * Allow moving out of futures and actor compiler changes to reduce copies
@@ -42,7 +56,8 @@
   * Persistent Adaptive Radix Tree might be a good candidate
   * (Persistent in the versioned sense, and not persistent as in disk.)
   * [HOPE](https://arxiv.org/pdf/2003.02391.pdf) would maybe be useful to reduce in-memory size of data?
-    * **Rusty** to bug Pavlo about releasing the code 
+    * **Rusty** to bug Pavlo about releasing the code
+    * Update: HOPE source was released
 * New Slack channel of #write-throughput-discuss made for this project
 * Proxy optimizations
   * 550micros spent in batching
