@@ -1,6 +1,6 @@
 ### 4/29/2020
 
-* Work continuing Persistent ART
+* Work continuing on Persistent ART
   * Another ART implementation in HOPE if it's better/faster/more tested
   * One could maintain an ART of N second windows to re-use the existing Arena-based one.
   * One could maintain an arena for every N seconds, and then concurrently walk through and remove references into older arenas.
