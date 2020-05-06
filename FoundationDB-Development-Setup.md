@@ -77,7 +77,7 @@ docker run --rm `# delete (temporary) image after return` \
     -e BOOST_ROOT=/opt/boost_1_72_0 \
     -e USE_CCACHE=ON \
     ${ccache_args} \
-    foundationdb/foundationdb-dev:0.11.2 scl enable devtoolset-8 rh-python36 rh-ruby24 -- "$@"
+    foundationdb/foundationdb-dev:0.11.4 scl enable devtoolset-8 rh-python36 rh-ruby24 -- "$@"
 ```
 
 If you want to set additional environment variables in your docker environment you can add them to the command using the following syntax:
