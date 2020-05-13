@@ -119,7 +119,7 @@ git clone git@github.com:apple/foundationdb.git
 mkdir build
 cd build
 fdb-dev cmake -G Ninja -DCMAKE_EXPORT_COMPILE_COMMANDS=ON ../foundationdb
-ninja
+fdb-dev ninja
 ```
 
 # Setting up a Development Environment
