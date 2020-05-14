@@ -24,6 +24,7 @@
 * https://github.com/apple/foundationdb/wiki/Migrating-to-New-Machines
 
 # General Ops Knowledge
+* https://github.com/apple/foundationdb/wiki/FoundationDB-Trace-Metrics-Definitions
 * https://github.com/apple/foundationdb/wiki/Cluster-reaction-to-failures
 * https://github.com/apple/foundationdb/wiki/Handling-of-Storage-Server-Drive-Failures
 
