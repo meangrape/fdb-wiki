@@ -122,6 +122,8 @@ fdb-dev cmake -G Ninja -DCMAKE_EXPORT_COMPILE_COMMANDS=ON ../foundationdb
 fdb-dev ninja
 ```
 
+Note: Sometimes the cmake step can potentially run into a bizarre error. Turned out it's caused because of clock skew. Fix the clock with `sudo hwclock --hctosys` if you have clock skew.
+
 # Setting up a Development Environment
 
 We use `clangd` for code navigation and completion. `clangd` is a [language server](https://langserver.org/) for C++ and can be used by many editors (Emacs, Vim, Atom, etc). This section describes how to set up [Visual Studio Code](https://code.visualstudio.com/) - this is one of the easiest editors to set up.
