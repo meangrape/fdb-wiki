@@ -2182,10 +2182,10 @@ edundancy_mode\:	hree_data_hall\,\storage_engine\:\ssd-2\,\usable_regions\:1}` |
 | `KvstoreBytesFree` | `952354414592` |             |
 | `KvstoreBytesAvailable` | `952354414592` |             |
 | `KvstoreBytesTotal` | `1056755048448` |             |
-| `QueueDiskBytesUsed` | `50510909440` |             |
-| `QueueDiskBytesFree` | `952354414592` |             |
-| `QueueDiskBytesAvailable` | `952354414592` |             |
-| `QueueDiskBytesTotal` | `1056755048448` |             |
+| `QueueDiskBytesUsed` | `50510909440` |      bytes used on disk for the files used by a particular instance       |
+| `QueueDiskBytesFree` | `952354414592` |    free space on disk (e.g. as reported by the OS)         |
+| `QueueDiskBytesAvailable` | `952354414592` |       amount available for storage engine use, to include free space on disk and any internal space within the storage engine’s files that’s not currently used but is reusable      |
+| `QueueDiskBytesTotal` | `1056755048448` |     total size of the disk         |
 | `PeekMemoryReserved` | `0` |             |
 | `PeekMemoryRequestsStalled` | `0` |             |
 | `Machine` | `10.180.50.179:4519` |             |
