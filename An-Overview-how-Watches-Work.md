@@ -31,7 +31,6 @@ In general there are two parts of this implementation: one part is implemented i
 
 Watches are registered through a transaction and are registered with a storage server. The storage will keep all watches in a map internally. For each mutation that is executed on the storage, it will then look up corresponding watches from that map and, if there are any, will send the version at which the change was made back to the client.
 
-
 # Guarantees
 
 A watch might get notified on changes. However, you can miss changes for two reasons:
@@ -47,3 +46,41 @@ If a client fails, the storage will keep that watch until it will be triggered t
 ## Server Failures
 
 Watches on storage servers are ephemeral. So if a storage server fails, it will lose all current watches. While clients are waiting for a watch reply, they will ping the server (by default once a second) - if this times out they will automatically reregister the watch on a different server.
+
+# Usage
+
+The client side code for registering a watch and using the watch is often in this pattern:
+
+```
+	// First transaction waits for a change to a key
+	state Reference<ReadYourWritesTransaction> tr(new ReadYourWritesTransaction(cx));
+	state Future<Void> watchFuture;
+	loop {
+		try {
+			... // Optional<Value> value = wait(tr->get(someKey));
+
+			watch = tr->watch(watchKey);
+			wait(tr->commit());
+			wait(watchFuture);
+			break;
+		} catch (Error& e) {
+			wait(tr->onError(e));
+		}
+	}
+
+	// Second transaction reads the key
+	tr->reset();
+	loop {
+		try {
+			// Optional<Value> value = wait(tr->get(watchKey));
+			...
+			wait(tr->commit());
+			break;
+		} catch (Error& e) {
+			wait(tr->onError(e));
+		}
+	}
+
+```
+
+Note the first transaction `wait` on the transaction commit and then `wait` on the `watchFuture`. If another transaction `Tx` modifies the `watchKey` between these two transactions, the above pattern guarantees that when `wait(watchFuture)` returns, `Tx` has already committed, thus the new transaction `Txn2` must see the effect of `Tx`.
