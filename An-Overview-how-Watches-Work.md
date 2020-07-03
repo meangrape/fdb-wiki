@@ -83,4 +83,4 @@ The client side code for registering a watch and using the watch is often in thi
 
 ```
 
-Note the first transaction `wait` on the transaction commit and then `wait` on the `watchFuture`. If another transaction `Tx` modifies the `watchKey` between these two transactions, the above pattern guarantees that when `wait(watchFuture)` returns, `Tx` has already committed, thus the new transaction `Txn2` must see the effect of `Tx`.
+Note the first transaction `wait` on the transaction commit and then `wait` on the `watchFuture`. Specifically, the `tr->commit()` in the first transaction sets up the `watchFuture` to receive changes from the committed version of the first transaction. As a result, if another transaction `Tx` modifies the `watchKey` after the first transactions, the above pattern guarantees that when `wait(watchFuture)` returns, `Tx` has already committed and the second transaction runs after it (thus will see the effect of `Tx`).
