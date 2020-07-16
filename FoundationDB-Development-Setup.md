@@ -104,7 +104,7 @@ fdb-dev clangd
 save it as `$HOME/bin/clangd`, and make it an executable:
 
 ```
-chmod -x $HOME/bin/clangd
+chmod +x $HOME/bin/clangd
 ```
 
 Congratulations, your FoundationDB development machine is now setup. The first time you call into `fdb-dev`, docker will fetch the image. This will take a few minutes and you need to be online for this to succeed.
