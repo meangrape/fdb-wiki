@@ -75,6 +75,7 @@
 * https://github.com/apple/foundationdb/wiki/Locking-a-Key-Range
 * https://github.com/apple/foundationdb/wiki/Difference-between-Tuple.range()-and-Range.startsWith()
 * https://github.com/apple/foundationdb/wiki/Multi-Gets-and-Sets
+* [Debug tips](https://github.com/apple/foundationdb/wiki/Debugging-in-FDB)
 
 # Layer Concept
 * https://github.com/apple/foundationdb/wiki/Best-way-to-add-an-index-on-already-existing-data
