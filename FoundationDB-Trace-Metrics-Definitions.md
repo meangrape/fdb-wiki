@@ -1,4 +1,4 @@
-FoundationDB outputs various messages to `/var/log/foundationdb`. While some of these such may be self-explanatory, others are hard to decipher. This page is a full listing of all metrics (as of v6.2.15 20566f2ff06a7e822b30e8cfd91090fbd863a393) and their definitions. 
+FoundationDB outputs various messages to `/var/log/foundationdb`. While some of these may be self-explanatory, others are hard to decipher. This page is a full listing of all metrics (as of v6.2.15 20566f2ff06a7e822b30e8cfd91090fbd863a393) and their definitions. 
 
 **Initially these will be blank. If you come here to find a metric definition and do not find it -- please update the page when you do!**
 
