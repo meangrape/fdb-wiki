@@ -31,4 +31,4 @@ Here are some helpful debugging tips when you encounter with simulation failures
     * [Build the 6.2 binary](https://github.com/apple/foundationdb/wiki/FoundationDB-Development-Setup#building-foundationdb) in your `build6.2` folder with CMake and Ninja.
     * Change directory back to your current build directory. Use the old `fdbserver` binary to run the restarting test that failed.
     * Now use your up to date `fdbserver` binary to run the restarting test that failed, and append `--restarting` to the command.
-    * Example: `$ ../build6.2/bin/fdbserver -r simulation -f ../foundationdb/tests/restarting/from_6.2.0/SnapTestSimpleRestart-1.txt -s 523887594 -b on` `$ ./bin/fdbserver -r simulation -f ../foundationdb/tests/restarting/from_6.2.0/SnapTestSimpleRestart-1.txt -s 523887594 -b on --restarting`
+    * Example: `$ ../build6.2/bin/fdbserver -r simulation -f ../foundationdb/tests/restarting/from_6.2.0/SnapTestSimpleRestart-1.txt -s 523887594 -b on` `$ ./bin/fdbserver -r simulation -f ../foundationdb/tests/restarting/from_6.2.0/SnapTestSimpleRestart-2.txt -s 523887594 -b on --restarting`
