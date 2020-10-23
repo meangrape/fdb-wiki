@@ -25,10 +25,4 @@ Here are some helpful debugging tips when you encounter with simulation failures
    * use addr2line. The problematic trace stack is logged in trace files and stdout. (ex. `addr2line -e ./bin/fdbserver -p -C -f -i 0x7fae93006630 0x26b5f98 0x26eff9b 0x26dc132 0x26df565 0x26dfaea 0x25c8798 0x25c4f45 0x25c20d8 0x25c1e0e 0x25c0118 0x25b816c 0x25bf888 0x25bf4ba 0x25bc968 0x25bc27a 0x1eb6148 0xf34538 0xf34316 0x287a431 0x287a1f1 0xfc6c78 0x28edc37 0x28eda96 0x28ed731 0x28edae2 0x28ee16c 0xfc6c78 0x29d1016 0x29c5bfe 0x28df844 0x13f3c18 0x7fae92745555`
 
 6. A restart test failed. How do I reproduce it locally?
-    * Restart tests, located in `tests/restarting`, test FDBs ability to correctly function after upgrades. Reproducing them manually requires two versions of FDB on your machine.
-    * Create a new build directory named with the version of FDB you will be building. For example, if you are failing a restarting test in the `from_6.2.0` folder, create a new build directory named `build6.2` in your home directory according to the [build instructions](https://github.com/apple/foundationdb/wiki/FoundationDB-Development-Setup#building-foundationdb).
-    * Checkout the 6.2 release in your main FDB repo with `git checkout -b 6.2 origin/release-6.2`. This creates a new local branch `6.2` for the 6.2 release.
-    * [Build the 6.2 binary](https://github.com/apple/foundationdb/wiki/FoundationDB-Development-Setup#building-foundationdb) in your `build6.2` folder with CMake and Ninja.
-    * Change directory back to your current build directory. Use the old `fdbserver` binary to run the restarting test that failed.
-    * Now use your up to date `fdbserver` binary to run the restarting test that failed, and append `--restarting` to the command.
-    * Example: `$ ../build6.2/bin/fdbserver -r simulation -f ../foundationdb/tests/restarting/from_6.2.0/SnapTestSimpleRestart-1.txt -s 523887594 -b on` `$ ./bin/fdbserver -r simulation -f ../foundationdb/tests/restarting/from_6.2.0/SnapTestSimpleRestart-2.txt -s 523887594 -b on --restarting`
+    * See https://github.com/apple/foundationdb/wiki/How-to-reproduce-a-restart-test-failure.
