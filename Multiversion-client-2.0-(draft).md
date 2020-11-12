@@ -43,3 +43,4 @@ The current proposal is that we start offering "fat bindings" (similar to the fa
 - Push patch updates to clients through server - something like `fdbcli --exec 'distribute client /path/to/libfdb_c.so'`
 - Don’t overload coordinators
 - Measure client downtime caused by recovery, and don’t make it worse
+- Implement fdb_get_server_protocol natively in clients?
