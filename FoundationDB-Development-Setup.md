@@ -124,6 +124,16 @@ fdb-dev ninja
 
 Note: Sometimes the cmake step can potentially run into a bizarre error. Turned out it's caused because of clock skew. Fix the clock with `sudo hwclock --hctosys` if you have clock skew.
 
+### Ccache
+
+The version of ccache currently shipping in the `foundationdb-dev` image (ccache v3.1.6) defaults to a maximum of 1GB of files stored in the cache. It is recommended to increase this size as much as possible for faster builds. Run the following to increase the cache size to 100GB:
+
+```
+$ fdb-dev ccache --max-size 100G
+```
+
+You can also view ccache stats by running `$ fdb-dev ccache -s`.
+
 # Setting up a Development Environment
 
 We use `clangd` for code navigation and completion. `clangd` is a [language server](https://langserver.org/) for C++ and can be used by many editors (Emacs, Vim, Atom, etc). This section describes how to set up [Visual Studio Code](https://code.visualstudio.com/) - this is one of the easiest editors to set up.
