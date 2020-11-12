@@ -32,6 +32,19 @@ We could conceivably also have `fdb_get_server_protocol` return all the same ver
 
 The current proposal is that we start offering "fat bindings" (similar to the fat jar) which bundle a copy of libfdb_c for every supported platform. Such a package would then be set up to query the server for its protocol version, and if necessary download an appropriate libfdb_c based on that. This downloaded libfdb_c could then be loaded as an external client by the [multiversion client](https://apple.github.io/foundationdb/api-general.html#multi-version-client-api). Loading an external client after setting up the network [isn't currently supported](https://github.com/apple/foundationdb/blob/daf297451155aebac7bffca9155e693a08053c7b/fdbclient/MultiVersionTransaction.actor.cpp#L1032), so we'd have to fix that.
 
+# Retrieving libfdb_c.so
+
+We currently have two ideas for retrieving the libfdb_c.so file.
+
+1. Downloading directly from coordinators
+2. Downloading from blob store
+
+Both ideas have some considerations that go along with them. 
+
+**Downloading from coordinators** would require thought into where to write the file and how to get write permissions into that directory. We would also have to make sure not to overload coordinators with download requests.
+
+**Downloading from blob store** would require clients to go to an external source (namely the blob store) to download the libfdb_c file, which some clients may not accept.
+
 # Other ideas
 
 - Download libfdb_c directly from coordinators
