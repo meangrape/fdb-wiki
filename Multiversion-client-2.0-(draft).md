@@ -8,7 +8,10 @@
 Proposed API:
 
 ```
-FDBFuture* fdb_get_server_protocol(const char* clusterFilePath);
+// Get the server's protocol version, optionally passing in an expected protocol version.
+// If you only want to know what the current server protocol is, then pass NULL for currentProtocol.
+// Otherwise, the returned future becomes ready when the protocol version different from *currentProtocol.
+FDBFuture* fdb_get_server_protocol(const char* clusterFilePath, const uint64_t* currentProtocol);
 fdb_error_t fdb_future_get_uint64( FDBFuture* f, uint64_t* out );
 ```
 
