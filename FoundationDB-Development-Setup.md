@@ -21,7 +21,7 @@ systemctl enable docker # this will make sure that the daemon is started at boot
 systemctl start docker # start the docker daemon
 ```
 
-Additionally you need to give your user permissions to run docker containers. You can do this by adding your user to the group `docker` (on certain distributions, like CentOS 7, this group has a different name. For example on CentOS 7 you need to add your user to the group `dockerrot`). You can do this by running the following command:
+Additionally you need to give your user permissions to run docker containers. You can do this by adding your user to the group `docker` (on certain distributions, like CentOS 7, this group has a different name. For example on CentOS 7 you need to add your user to the group `dockerroot`). You can do this by running the following command:
 
 ```
 sudo usermod -aG docker $USER
