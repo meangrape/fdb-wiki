@@ -1,6 +1,6 @@
 # Overview
 
-This documentation gives a short introduction into how locks are implemented in FoundationDB and what kind of guarantees a client is getting. Furthermore, this document should give some insight into back practices.
+This documentation gives a short introduction into how watches are implemented in FoundationDB and what kind of guarantees a client is getting. Furthermore, this document should give some insight into back practices.
 
 ## An equivalent Functionality implemented in the Client
 
@@ -30,6 +30,8 @@ It is important to understand that the only thing that database watches solve is
 In general there are two parts of this implementation: one part is implemented in the client and one is implemented on the server side. These play together to achieve the right functionality.
 
 Watches are registered through a transaction and are registered with a storage server. The storage will keep all watches in a map internally. For each mutation that is executed on the storage, it will then look up corresponding watches from that map and, if there are any, will send the version at which the change was made back to the client.
+
+Since the initial implementation of watches there have been a few [optimizations](https://github.com/apple/foundationdb/issues/3826) that were done. The first is on the client side, where watches are tracked for a given key and a request is only sent to the storage server if one has not been sent for a previous watch with the same key/value pair. The second optimization is on the server, where the duplication of key/value pairs is reduced by collapsing the actors for same key/value watches.
 
 # Guarantees
 
