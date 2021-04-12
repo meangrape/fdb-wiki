@@ -8,10 +8,10 @@ First, run the first restart test with the correct binary. For upgrade tests (`f
 $ ../build6.2/bin/fdbserver -r simulation -f ../foundationdb/tests/restarting/from_6.2.0/SnapTestSimpleRestart-1.txt --seed 523887594 --buggify on
 ```
 
-Next, *from the same folder*, run a simulation of the **second** restart test with the **other** binary. For upgrade tests, use the newer binary. For downgrade tests, use the older binary. **Additionally, make sure to pass the `--restarting` flag and to use the same seed and buggify value.**
+Next, *from the same folder*, run a simulation of the **second** restart test with the **other** binary. For upgrade tests, use the newer binary. For downgrade tests, use the older binary. **Additionally, make sure to pass the `--restarting` flag and to use the seed + 1 and buggify value.**
 
 ```
-$ ./bin/fdbserver -r simulation -f ../foundationdb/tests/restarting/from_6.2.0/SnapTestSimpleRestart-2.txt --seed 523887594 --buggify on --restarting
+$ ./bin/fdbserver -r simulation -f ../foundationdb/tests/restarting/from_6.2.0/SnapTestSimpleRestart-2.txt --seed 523887595 --buggify on --restarting
 ```
 
 ## Debugging Joshua
