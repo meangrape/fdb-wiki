@@ -23,7 +23,7 @@ Anyone can make pull requests. Currently the FoundationDB team at Apple is contr
 * Never be offended if a PR is rejected by a reviewer!
 * Doing a good job in a code review can save us (and our build cops!) a lot of trouble down the road. Please take this job seriously. If you're unsure whether a code-change has a high enough quality in order to be merged, it probably hasn't. You can use the points below as a check-list:
 
-# Code Style
+## Code Style
 * **Variable and Function Names.** Do variable and function names make sense for what they mean / how they are used? Often during development the role of a variable or function can drift, a reviewer’s fresh perspective might notice confusing names more easily than the original developer.
 * **Consider running git clang-format to format your changes.** In some cases, this can result in funny looking code as not all files are formatted correctly.
 
@@ -41,3 +41,13 @@ Check for new slow tasks. In simulation or in performance runs, check whether th
 * Are ASSERT, ASSERT_WE_THINK, and TEST appropriately and correctly used? Assertions about invariants are always nice to have. They can also be made simulation-only. Code paths that are required to have meaningful and good testing coverage should have a TEST() macro to ensure that they are actually tested.
 * Does it make sense to have unit-tests? We don’t do too much unit-testing in fdb. But for some components it might still be worth adding unit tests (like new data structures)
 * For bug fixes: is there a test that catches regressions? For bugs that we do not find in simulation, we should first try to write a test that reproduces the problem before fixing it.
+
+## Development Process
+* Every PR needs a description (title is *NOT* a description). The description has to describe what the change is doing and how it was tested (such as the correctness test’s result summary, perf test result).
+* Instead of merging up, we’re cherry-picking down. So if you want a change in `release-6.3` you first need to make this change in `master` and then cherry-pick the change (if applicable).
+* If a PR is made against a release-branch there must be a justification in the description (or a link to a GitHub issue).
+* Every function/actor/class that has been touched needs to be documented. Currently there are no guidelines about how much documentation is needed so it’s mostly at the discretion of the author and the reviewers. But the minimum is one sentence per function/actor/class has to exist. Our code-documentation is quite bad and this is an attempt of gradually improving code quality.
+
+Additionally the following two changes will be made in the near future:
+* All PRs will need two reviewers (at least on release branches, for master there hasn’t been a decision yet).
+* Each release branch will have an owner. The owner will keep track of changes made to a branch. Not all responsibilities have been defined yet, but this person will be able to revert changes if they cause problems or do not follow the process or simply are not properly documented.
