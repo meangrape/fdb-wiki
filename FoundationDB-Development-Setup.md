@@ -148,7 +148,27 @@ In the search box type `clangd` to search for the extension. You should get exac
 
 Now you should be open to open a folder (`File`->`Open Folder...` or press `Ctrl+k Ctrl+O`) and open the source folder. After opening a C++ file, you should be able to navigate code and use auto completion (it might take a while for all features to work, as `clangd` will need to index the code).
 
+## Troubleshooting
+
+If just doing the above doesn't work you will need to make sure that you're including a `compile_commands.json` file in the root directory of your FDB folder.
+
+This file is generated in your `~/build` folder when you run CMAKE with the `-DCMAKE_EXPORT_COMPILE_COMMANDS=ON` option (see above).
+
+You can either run `make processed_compile_commands` (this may not work) to get this file into your local fdb project directory or create a symbolic link to it: `ln -s /home/<user>/build/compile_commands.json /home/<user>/foundationdb/`
+
 *Warning*: The first time you open a C++ file, VS Code will ask you whether you want to install the C++ extension. Don't install those, they will break stuff!
 
 ![image](https://user-images.githubusercontent.com/317455/80317069-6bc39980-87b6-11ea-9ce5-79d0880c4b66.png)
 
+# Setting up clang-format with clangd on VSCode
+
+Since FDB doesn't use a linter as part of it's CI (yet) its important that developers format their code locally before commiting (using clang-format).
+
+To set up clang-format on VSCode follow these steps (assumes clangd extension is already installed):
+
+1. Go to settings (type ⌘ + ,). In the search bar look for format
+2. Set the Editor: Default Formatter to `llvm-vs-code-extensions.vscode-clangd`
+3. Check the box Editor: `Format On Save`
+4. Make sure Editor: `Format On Save Mode to file`
+
+![image](https://user-images.githubusercontent.com/77290632/116298032-f80df100-a769-11eb-9b5f-b8c8d64bdf78.png)
