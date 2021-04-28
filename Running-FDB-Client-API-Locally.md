@@ -7,6 +7,9 @@ When developing on FDB it may be important to run a `.cpp`/`.py`/`.java` file us
 2. Compile your C++ file(s) using a command similar to: `g++ -o <exe_name> -I ~/build/bindings/c/foundationdb/ -I ~/build/bindingtester/tests/c/ -std=c++17 -L ~/build/bindings/c/ -lfdb_c -lpthread a.cpp b.cpp`
 3. When you now run `./<exe_name>` it should reflect any changes you made to the C client API
 
+## Troubleshooting
+
+If you're running into issues (i.e a new function you added is not showing up) try running `ldd <path-to-binary>` to check the library dependencies of a binary (to make sure it's loading libfdb_c correctly).
 # Using a local version of the Python API
 
 1. `export LD_LIBRARY_PATH=/home/<user>/build/lib/`
