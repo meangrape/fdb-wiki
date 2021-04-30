@@ -77,7 +77,7 @@ docker run --rm `# delete (temporary) image after return` \
     -e BOOST_ROOT=/opt/boost_1_72_0 \
     -e USE_CCACHE=ON \
     ${ccache_args} \
-    foundationdb/foundationdb-dev:0.11.13 scl enable devtoolset-8 rh-python36 rh-ruby24 -- "$@"
+    foundationdb/devel:centos7-latest scl enable devtoolset-8 rh-python36 rh-ruby26 -- "$@"
 ```
 
 If you want to set additional environment variables in your docker environment you can add them to the command using the following syntax:
@@ -121,6 +121,10 @@ cd build
 fdb-dev cmake -G Ninja -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DUSE_CCACHE=ON ../foundationdb
 fdb-dev ninja
 ```
+
+Note: If you get an error like `ld.lld: error: undefined symbol: std::__once_callable` set `FORCE_BOOST_BUILD` to `ON` in CMakeCache.txt
+
+Note: If you get an error like `WARNING: IPv4 forwarding is disabled. Networking will not work.` restart the docker daemon.
 
 Note: Sometimes the cmake step can potentially run into a bizarre error. Turned out it's caused because of clock skew. Fix the clock with `sudo hwclock --hctosys` if you have clock skew.
 
