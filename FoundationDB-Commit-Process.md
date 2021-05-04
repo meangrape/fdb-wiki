@@ -17,7 +17,7 @@ Anyone can make pull requests. Currently the FoundationDB team at Apple is contr
 * If a PR is not done done (code complete, test complete, and performance tested) it should be a draft PR. Only if the authors believe that the PR can be merged as is, it should be a non-draft PR.
 * If the author wants reviewers to look at the code, the label RFC should be applied. If you’re assigned as a reviewer you should ignore draft PRs unless they have the RFC label attached to them
 * If the author wants to talk about the change in our weekly meeting, the label needs-discussion should be applied.
-* A PR that cherry-picks a change from a newer branch should include a title and description that describes the change being made. For example, instead of the title "Cherry-pick #XXXX", you could include the original PR title "Change feature X (release-X.Y)" and copy the original description. 
+* A PR that cherry-picks a change from a newer branch should include a title and description that describes the change being made. For example, instead of the title "Cherry-pick #XXXX", you could include the original PR title "Change feature X (release-X.Y)" and copy the original description. The PR description should include the original PR number so that readers know which PR is cherry-picked. Please refer to [PR#4677](https://github.com/apple/foundationdb/pull/4677) as an example.
 * A PR should include links in the description to any issues that it is addressing or any PRs on other branches that it was cherry-picked from. 
 
 ## Code Review
