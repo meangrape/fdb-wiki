@@ -9,7 +9,7 @@ Anyone can make pull requests. Currently the FoundationDB team at Apple is contr
 * Only merge PRs for which you are the assignee. The only exception to that is if the assignee does not have merge-rights and asks you to click the merge button.
 * Only merge a PR if CI successfully finished. The only exception to that are changes that are expected to break CI (for example changes to docker containers). "This change is trivial" is not a valid reason to merge before CI is done!
 * Never merge a draft PR. You can reach out to an author and ask them to make the PR a non-draft.
-* You may merge your own PR as long as it has the required number of reviews (GitHub will enforce this). New changes to a PR will dismiss all existing reviews, so an approved PR can be safely merged under the assumption the reviewer(s) has seen all changes.
+* You may merge your own PR as long as it has the required number of reviews (GitHub will enforce this). New changes to a PR will dismiss all existing reviews, so an approved PR can be safely merged under the assumption the reviewer(s) have seen all changes.
 * A PR needs at least one approved review.
 
 ## Rules for PRs
