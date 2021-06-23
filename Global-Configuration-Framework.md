@@ -36,7 +36,7 @@ struct ConfigValue {
 };
 ```
 
-If the global configuration framework does not have a value for the given key, `configValue.has_value()` will return false. Otherwise, the value can be cast to the appropriate type with `std::any_cast`.
+If the global configuration framework does not have a value for the given key, `configValue.value.has_value()` will return false. Otherwise, the value can be cast to the appropriate type with `std::any_cast`.
 
 ```
 ASSERT(configValue.value.has_value());
