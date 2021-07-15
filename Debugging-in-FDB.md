@@ -26,3 +26,7 @@ Here are some helpful debugging tips when you encounter with simulation failures
 
 6. A restart test failed. How do I reproduce it locally?
     * See https://github.com/apple/foundationdb/wiki/How-to-reproduce-a-restart-test-failure.
+
+7. Try to set `TestConfig.simpleConfig=true` to make the fdb cluster as a small cluster to make debug easier.
+
+8. `MutationTracking.h` and `MutationTracking.cpp` file contains useful functions to track all mutation activities of up to 2 keys in simulation test. Try to set the key you want to track, and `grep MutationTracking`.
