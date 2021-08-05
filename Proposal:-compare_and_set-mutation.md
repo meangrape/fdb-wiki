@@ -1,6 +1,6 @@
 # Semantics
 
-The `compare_and_set` mutation would consist of a key, an expected former value, and a value to set the key to if the former value matches the expected former value. The expected former value can either be absent (meaning the key has no value) or a value to be compared with the former value. Likewise, the value to set if the comparison succeeds can be absent (indicating that the key should be cleared), or present (indicating the value should be updated). This way it can be used to set a key to a value only if it was previously absent.
+The `compare_and_set` mutation would consist of a key, an expected former value, and a value to set the key to if the former value matches the expected former value. The expected former value can either be absent (meaning the key is not set) or a value to be compared with the former value. Likewise, the value to set if the comparison succeeds can be absent (indicating that the key should be cleared), or present (indicating the value should be updated). This way it can be used to set a key to a value only if it was previously absent.
 
 Examples:
 
@@ -66,4 +66,5 @@ WIP
 1. Test combining this feature with backup and dr to make sure that applying a backup still works.
 2. Add this to the `FuzzApiCorrectness` workload.
 3. Add to binding tester.
+4. Test downgrades with a workload that uses this mutation.
 
