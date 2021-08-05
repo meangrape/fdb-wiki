@@ -6,7 +6,7 @@ The `compare_and_set` mutation would consist of a key, an expected former value,
 
 Like other mutations, the transaction succeeds or fails solely based on the read conflict range of that transaction. The transaction committing successfully does not tell you any information about what the former value of the key was. Similarly, each of these mutations in a transaction would behave independently. For example, a scheme that attempts to swap the values of two keys using two of these mutations would _not_ be sound, since it could be that _only one_ of these mutations has an effect.
 
-Examples:
+## Examples
 
 ```
 Key: "foo", ValueToCompare: "old", ValueToSet: "new"
