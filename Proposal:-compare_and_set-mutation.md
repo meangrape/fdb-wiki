@@ -71,4 +71,5 @@ WIP
 2. Add this to the `FuzzApiCorrectness` workload.
 3. Add to binding tester.
 4. Test downgrades with a workload that uses this mutation.
+5. Add this to the `AtomicOpsApiCorrectness` workload.
 
