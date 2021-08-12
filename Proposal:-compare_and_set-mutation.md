@@ -1,3 +1,7 @@
+# Status
+
+This proposal is currently on hold as it seems most users want the transaction to fail if the mutation doesn't have an effect.
+
 # Semantics
 
 The `compare_and_set` mutation would consist of a key, an expected former value, and a value to set the key to if the former value matches the expected former value. The expected former value can either be absent (meaning the key is not set) or a value to be compared with the former value. Likewise, the value to set if the comparison succeeds can be absent (indicating that the key should be cleared), or present (indicating the value should be updated). This way it can be used to set a key to a value only if it was previously absent.
