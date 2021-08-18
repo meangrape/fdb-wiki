@@ -1,6 +1,6 @@
 Restart tests, located in [`tests/restarting`](https://github.com/apple/foundationdb/tree/master/tests/restarting), test FDBs ability to correctly function after an upgrade or downgrade. Tests come in pairs, with `*-1.txt` to be run first, and `*-2.txt` to be run second. Folders matching the expression `from_x.x.x` test upgrading the binary by one version (i.e. testing an upgrade from 6.3.5 to 7.0.0), while folders matching `to_x.x.x` test downgrading the binary by one version.
 
-Reproducing a restart failure is different from other simulation tests. Specifically, to reproduce the failure, we need to run two commands, one with the old binary and one with the new binary. Before running a restart test, make sure you have two binaries of the correct FDB version available. You can [download old binaries](https://www.foundationdb.org/downloads/misc/fdbservers-6.2.22.tar.gz) or just build the version you need.
+Reproducing a restart failure is different from other simulation tests. Specifically, to reproduce the failure, we need to run two commands, one with the old binary and one with the new binary. Before running a restart test, make sure you have two binaries of the correct FDB version available. You can [download old binaries](https://www.foundationdb.org/downloads/misc/fdbservers-6.2.24.tar.gz) or just build the version you need.
 
 First, run the first restart test with the correct binary. For upgrade tests (`from_x.x.x`), use the older binary. For downgrade tests (`to_x.x.x`), use the newer binary. This example will look at an upgrade test.
 
