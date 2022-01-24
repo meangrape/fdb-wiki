@@ -1,18 +1,10 @@
 # Requirements
 
-Our standard development setup uses [docker](https://www.docker.com/) or [podman](https://podman.io/). This means that any Linux distribution can be used as long as docker or podman is available.
-
-## Podman vs Docker
-
-Podman is a docker drop-in-replacement. If your Linux distribution gives you the choice between both, podman will be slightly easier to use. The main difference is that podman doesn't use a service and instead each container will run in a user process. The main benefit for development is that many file ownership problems go away (a file created in a mounted this will be owned by the user who called into podman).
-
-The following tutorial assumes that you're using docker. But everything was also tested in podman.
+Our standard development setup uses [docker](https://www.docker.com/). This means that any Linux distribution can be used as long as docker is available.
 
 ## Setting up Docker
 
-First install docker or podman through the package manager of your Linux distribution.
-
-If you use podman you're done and can continue to the next section (setting up a bin-directory). Otherwise a few more things might be needed.
+First install docker through the package manager of your Linux distribution.
 
 Make sure that the docker daemon is running. In most distribution this can be done through `systemctl` (refer to the documentation of your OS to find the exact commands):
 
@@ -77,7 +69,7 @@ docker run --rm `# delete (temporary) image after return` \
     -e BOOST_ROOT=/opt/boost_1_72_0 \
     -e USE_CCACHE=ON \
     ${ccache_args} \
-    foundationdb/devel:centos7-latest scl enable devtoolset-8 rh-python36 rh-ruby26 -- "$@"
+    foundationdb/devel:centos7-latest scl enable devtoolset-8 rh-python36 rh-ruby27 -- "$@"
 ```
 
 If you want to set additional environment variables in your docker environment you can add them to the command using the following syntax:
