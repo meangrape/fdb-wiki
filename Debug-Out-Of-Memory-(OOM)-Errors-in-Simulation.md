@@ -11,6 +11,8 @@ See a sample profile [here](https://github.com/apple/foundationdb/issues/2218).
 
 ### Option 2: Use Valgrind tool massif
 
+See [massif manual](https://valgrind.org/docs/manual/ms-manual.html).
+
 1. Compile with Valgrind, e.g., `cmake -S ${HOME}/src/foundationdb -B ${HOME}/build_output -D USE_CCACHE=ON -D USE_WERROR=ON -D USE_VALGRIND=ON -G Ninja && ninja -C ${HOME}/build_output -j 80 fdbserver`
 1. Run with massif tool, e.g., `valgrind --tool=massif ./build_output/bin/fdbserver -r simulation --crash --logsize 1024MB -f ./foundationdb/tests/fast/ConfigureLocked.toml -s 93093841 -b on`
 
