@@ -149,9 +149,12 @@ MutationRef m;
 
 ## Debugging Techniques
 
-See this [doc](https://hackmd.io/@fcfArsh_TF2EoVfmdyhrrQ/HyDLmDeOY), and several other wiki pages here.
-
-Use [Valgrind/ASAN for FDB](https://github.com/jzhou77/foundationdb/wiki/Valgrind).
+* See this [doc](https://hackmd.io/@fcfArsh_TF2EoVfmdyhrrQ/HyDLmDeOY) for general techniques and samples
+* https://github.com/apple/foundationdb/wiki/Debug-Out-Of-Memory-(OOM)-Errors-in-Simulation
+* https://github.com/apple/foundationdb/wiki/Debug-Performance-Issues-Using-Perf
+* https://github.com/apple/foundationdb/wiki/Debugging-in-FDB
+* https://github.com/apple/foundationdb/wiki/How-to-reproduce-a-restart-test-failure
+* Use [Valgrind/ASAN for FDB](https://github.com/jzhou77/foundationdb/wiki/Valgrind).
 
 ## "Mostly" Single Threaded
 
