@@ -125,7 +125,7 @@ A surprising fact is that `BinaryReader` has an internal `Arena` object, which i
 	}
 ```
 
-Note `arenaRead()` allocates memory `new (arena()) uint8_t[bytes]`, and then copies bytes into the newly allocated memory. This important to know, because for `StringRef`, its serialization (defined in [Arena.h](https://github.com/apple/foundationdb/blob/main/Arena.h) ) is:
+Note `arenaRead()` allocates memory `new (arena()) uint8_t[bytes]`, and then copies bytes into the newly allocated memory. This is important to know, because for `StringRef`, its serialization (defined in [Arena.h](https://github.com/apple/foundationdb/blob/main/Arena.h) ) is:
 
 ```
 template <class Archive>
@@ -139,6 +139,7 @@ inline void load(Archive& ar, StringRef& value) {
 So if a `BinaryReader` is used to deserialize a `StringRef`, then the returned value's life cycle is the same as the `BinaryReader` object. As a result, if the `BinaryReader` object goes out of the scope, the `MutationRef` returned by the `BinaryReader` object will points to invalid memory:
 
 ```
+Standalone<StringRef> serialized;
 MutationRef m;
   {
     BinaryReader reader(serialized, IncludeVersion());
