@@ -149,7 +149,7 @@ MutationRef m;
 
 ## Debugging Techniques
 
-See this [doc](https://hackmd.io/@fcfArsh_TF2EoVfmdyhrrQ/HyDLmDeOY).
+See this [doc](https://hackmd.io/@fcfArsh_TF2EoVfmdyhrrQ/HyDLmDeOY), and several other wiki pages here.
 
 Use [Valgrind/ASAN for FDB](https://github.com/jzhou77/foundationdb/wiki/Valgrind).
 
