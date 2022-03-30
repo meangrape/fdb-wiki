@@ -139,7 +139,7 @@ inline void load(Archive& ar, StringRef& value) {
 So if a `BinaryReader` is used to deserialize a `StringRef`, then the returned value's life cycle is the same as the `BinaryReader` object. As a result, if the `BinaryReader` object goes out of the scope, the `MutationRef` returned by the `BinaryReader` object will points to invalid memory:
 
 ```
-Standalone<StringRef> serialized;
+StringRef serialized = some_valid_string_ref;
 MutationRef m;
   {
     BinaryReader reader(serialized, IncludeVersion());
