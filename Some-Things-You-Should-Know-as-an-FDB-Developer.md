@@ -148,6 +148,32 @@ MutationRef m;
 // m.param1 now points to invalid memory
 ```
 
+## `AsyncVar::set()` may not "set" the value
+
+The `AsyncVar::set()` compares the value with its internal state and only set if they are different:
+
+```
+	void set(V const& v) {
+		if (v != value)
+			setUnconditional(v);
+	}
+```
+
+This usually works. However, if the `!=` operator for the value `v` is overloaded, there could be unintended consequences. For example, the `ClientDBInfo` has the overloaded operator as:
+
+```
+bool operator!=(ClientDBInfo const& r) const { return id != r.id; }
+```
+
+And in `extractClientInfo()`, we had code like:
+```
+		ClientDBInfo ni = db->get().client;
+		shrinkProxyList(ni, lastCommitProxyUIDs, lastCommitProxies, lastGrvProxyUIDs, lastGrvProxies);
+		info->set(ni);
+```
+
+This looks correct, but is wrong! The reason is that `shrinkProxyList()` modifies the `ni` object, but does not change the `id` field. As a result, even if `ni` has changed, `info->set(ni)` has no effect! This bug has caused infinite retrying GRVs at the client side. Specifically, the version vector feature introduces a change that the client side compares the returned proxy ID with its known set of GRV proxies and will retry GRV if the returned proxy ID is not in the set. Due to the above bug, GRV returned by a proxy is not within the client set, because the change was not applied to the "info". The fix is in [PR #6877](https://github.com/apple/foundationdb/pull/6877).
+
 ## Debugging Techniques
 
 * See this [doc](https://hackmd.io/@fcfArsh_TF2EoVfmdyhrrQ/HyDLmDeOY) for general techniques and samples
