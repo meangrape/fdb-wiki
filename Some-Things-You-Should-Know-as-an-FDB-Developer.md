@@ -174,6 +174,12 @@ And in `extractClientInfo()`, we had code like:
 
 This looks correct, but is wrong! The reason is that `shrinkProxyList()` modifies the `ni` object, but does not change the `id` field. As a result, even if `ni` has changed, `info->set(ni)` has no effect! This bug has caused infinite retrying GRVs at the client side. Specifically, the version vector feature introduces a change that the client side compares the returned proxy ID with its known set of GRV proxies and will retry GRV if the returned proxy ID is not in the set. Due to the above bug, GRV returned by a proxy is not within the client set, because the change was not applied to the "info". The fix is in [PR #6877](https://github.com/apple/foundationdb/pull/6877).
 
+## `addr2line` can be inaccurate
+
+In the trace log, we often see backtrace like: `addr2line -e fdbserver.debug -p -C -f -i 0x7fae93006630 0x26b5f98 0x26eff9b 0x26dc132`. There are two things to keep in mind:
+* The backtrace can be inaccurate. For instance, the backtrace of a segmentation fault is not obvious. When this happens, use `gdb` to rerun the seed and the backtrace within `gdb` is more reliable.
+* The `fdbserver.debug` refers to the symbol file stripped from the binary. This `fdbserver.debug` file can be replaced with the unstripped `fdbserver` binary.
+
 ## Debugging Techniques
 
 * See this [doc](https://hackmd.io/@fcfArsh_TF2EoVfmdyhrrQ/HyDLmDeOY) for general techniques and samples
