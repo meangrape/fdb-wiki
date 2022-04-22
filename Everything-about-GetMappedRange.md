@@ -209,3 +209,6 @@ Non essentail ones:
 - [Change Hop Info to more structured](https://github.com/nblintao/foundationdb/pull/2)
 - [Return early if a secondary query has more](https://github.com/apple/foundationdb/pull/6903)
 
+
+**If you have any questions, please feel free to reply to [this post](https://forums.foundationdb.org/t/everything-about-getmappedrange/3280). It’s the best way to reach out to me and future developers of this feature.**
+
