@@ -109,6 +109,30 @@ struct MutationRef {
 	}
 ```
 
+### Append new fields in `serializer()`
+
+FlatBuffer has a requirement that new fields should be added to the end of the list. During the 7.1.4 release process, we encountered an interesting bug: suddenly the Python or Java clients can no longer issues API calls to the 7.1.2 cluster. On the other hand, the same client that uses the 7.1.4 `libfdb_c.so` can work perfectly fine with the 7.1.4 cluster. After several hours, a group of engineers noticed there were incompatible changes:
+
+```
+struct OpenDatabaseCoordRequest {
+...
+        void serialize(Ar& ar) {
+-               serializer(ar, issues, supportedVersions, traceLogGroup, knownClientInfoID, clusterKey, coordinators, reply);
++               serializer(ar,
++                          issues,
++                          supportedVersions,
++                          traceLogGroup,
++                          knownClientInfoID,
++                          clusterKey,
++                          hostnames,
++                          coordinators,
++                          reply);
+        }
+```
+Note `hostnames` is inserted into the middle of the list of items. This change breaks compatibility between the client and the server, because the 7.1.2 server would interpret `hostnames` as `coordinators`----flat buffer use the relative position of items for serialization. The [fix](https://github.com/apple/foundationdb/pull/7094) is to move `hostnames` to the end of the list.
+
+A side note is that within a major version, such as 6.3 or 7.1, FDB binaries should be compatible. More specifically using FDB's term, they should be protocol compatible. In this way, a client uses 6.3.9 C library can connect to 6.3.24 cluster without any issues. And the server cluster can upgrade to new minor release versions, without the upgrade requirement for the client C library.
+
 ## BinaryReader has an `Arena`
 
 A surprising fact is that `BinaryReader` has an internal `Arena` object, which is used in `BinaryReader::arenaRead()`:
