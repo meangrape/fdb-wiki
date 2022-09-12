@@ -30,3 +30,11 @@ Here are some helpful debugging tips when you encounter with simulation failures
 7. Try to set `TestConfig.simpleConfig=true` to make the fdb cluster as a small cluster to make debug easier.
 
 8. `MutationTracking.h` and `MutationTracking.cpp` file contains useful functions to track all mutation activities of up to 2 keys in simulation test. Try to set the key you want to track, and `grep MutationTracking`.
+
+9. Use `fdbserver --print-sim-time` to print out the simulation seconds if you experience a long `time_out` failure. Kill the simulation after you think the debug already happened after a certain simulation interval.
+
+10. Use `DEBUG_ERROR` macro to enable backtrace when a specified error is created. 
+
+11. Use `tr.debugTransaction()` together with `debugRandom()` to enable the trace for a specified transaction without change the deterministic randomness of a simulation failure.
+
+12. There are several compilation options can enable sanitizer utilities provided by `clang`. For example, `USE_ASAN`, `USE_TSAN`...
