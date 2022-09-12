@@ -1,3 +1,13 @@
+---
+mainfont: "Abitare Sans 100"
+sansfont: "Abitare Sans 100"
+monofont: "PragmataPro Liga Regular"
+mathfont: "PragmataPro Liga Regular"
+colorlinks: true
+linkcolor: blue
+urlcolor: red
+toccolor: gray
+---
 Tao Lin (04/21/2022)
 
 GetMappedRange is an *experimental* feature introduced in FDB 7.1. It is intended to improve the client throughput and reduce latency for a commonly used traffic pattern. An experiment with Record Layer shows that this optimization can get 4x client throughput on a certain workload.

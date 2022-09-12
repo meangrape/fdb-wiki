@@ -1,3 +1,13 @@
+---
+mainfont: "Abitare Sans 100"
+sansfont: "Abitare Sans 100"
+monofont: "PragmataPro Liga Regular"
+mathfont: "PragmataPro Liga Regular"
+colorlinks: true
+linkcolor: blue
+urlcolor: red
+toccolor: gray
+---
 # What's the purpose of `TransactionRead` in official Python bindings?
 
 The purpose of the `TransactionRead` class is to encapsulate all of the parts of a transaction that lets it read from the database. (The equivalent in Java, for example, is the `ReadTransaction` interface) As it turns out, because in snapshot isolation, all a transaction can do is read, the Transaction.snapshot property only needs to be of that type.

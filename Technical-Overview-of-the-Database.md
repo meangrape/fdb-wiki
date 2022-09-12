@@ -1,3 +1,13 @@
+---
+mainfont: "Abitare Sans 100"
+sansfont: "Abitare Sans 100"
+monofont: "PragmataPro Liga Regular"
+mathfont: "PragmataPro Liga Regular"
+colorlinks: true
+linkcolor: blue
+urlcolor: red
+toccolor: gray
+---
 ## Components in FoundationDB
 
 The FoundationDB architecture chooses a decoupled design, where processes are assigned different heterogeneous roles (e.g., Coordinators, Storage Servers, Master). Scaling the database is achieved by horizontally expanding the number of processes for separate roles:

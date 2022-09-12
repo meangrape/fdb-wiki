@@ -1,3 +1,13 @@
+---
+mainfont: "Abitare Sans 100"
+sansfont: "Abitare Sans 100"
+monofont: "PragmataPro Liga Regular"
+mathfont: "PragmataPro Liga Regular"
+colorlinks: true
+linkcolor: blue
+urlcolor: red
+toccolor: gray
+---
 ## Overview
 
 FoundationDB supports safe, automatic failover in the event of a data center failure through multi-region replication, which is also known as Fearless DR. In a Fearless DR configuration, all commits are synchronously committed to transaction logs in multiple data centers before being confirmed to the client, and are asynchronously replicated to storage servers in multiple data centers. This approach allows you to make different choices about where you place the transaction logs and the storage servers to balance the requirements for low-latency commits with the requirements for geographically-distributed reads.

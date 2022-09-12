@@ -1,3 +1,13 @@
+---
+mainfont: "Abitare Sans 100"
+sansfont: "Abitare Sans 100"
+monofont: "PragmataPro Liga Regular"
+mathfont: "PragmataPro Liga Regular"
+colorlinks: true
+linkcolor: blue
+urlcolor: red
+toccolor: gray
+---
 # Background
 
 - https://forums.foundationdb.org/t/how-do-bindings-get-an-appropriate-copy-of-fdb-c/311

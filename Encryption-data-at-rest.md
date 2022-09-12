@@ -1,3 +1,13 @@
+---
+mainfont: "Abitare Sans 100"
+sansfont: "Abitare Sans 100"
+monofont: "PragmataPro Liga Regular"
+mathfont: "PragmataPro Liga Regular"
+colorlinks: true
+linkcolor: blue
+urlcolor: red
+toccolor: gray
+---
 (**Disclaimer**: This post is intentionally kept terse and doesn’t discuss the detailed design. The intention is to keep the community aware of upcoming feature additions to the FDB.)
 
 At Snowflake we are currently working on the **FDB native Encryption data at-rest** feature. The below document highlights the feature details with the broader community incase it is useful for others and they want to start preparatory work to utilize the feature (or want to participate in early testing as soon as the feature is code-complete in the main branch)

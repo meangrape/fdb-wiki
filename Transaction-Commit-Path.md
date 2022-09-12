@@ -1,3 +1,13 @@
+---
+mainfont: "Abitare Sans 100"
+sansfont: "Abitare Sans 100"
+monofont: "PragmataPro Liga Regular"
+mathfont: "PragmataPro Liga Regular"
+colorlinks: true
+linkcolor: blue
+urlcolor: red
+toccolor: gray
+---
 # Overview
 
 Before being made durable, FDB transactions must flow through several processes in an FDB cluster. This document gives a brief, high-level overview of each step in the commit pipeline. It focuses on the FDB7 implementation.  For a more detailed overview of the commit pipeline, see this [video](https://drive.google.com/file/d/1HS5xlVM_uruYVXNbPsWor5xu5qSyTKau/view?usp=sharing).

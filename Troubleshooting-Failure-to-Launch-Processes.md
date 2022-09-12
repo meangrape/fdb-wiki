@@ -1,3 +1,13 @@
+---
+mainfont: "Abitare Sans 100"
+sansfont: "Abitare Sans 100"
+monofont: "PragmataPro Liga Regular"
+mathfont: "PragmataPro Liga Regular"
+colorlinks: true
+linkcolor: blue
+urlcolor: red
+toccolor: gray
+---
 ## Overview
 
 When fdbmonitor is failing to launch fdbserver processes, the process output can be a bit confusing. fdbmonitor forks a copy of itself for each process specified in the conf file. The forked copy then tries to exec to the command invocation for the child process. If that fails, you may see multiple fdbmonitor processes in the `ps` output: one for the original fdbmonitor process, and one for the failing child. 

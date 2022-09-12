@@ -1,3 +1,13 @@
+---
+mainfont: "Abitare Sans 100"
+sansfont: "Abitare Sans 100"
+monofont: "PragmataPro Liga Regular"
+mathfont: "PragmataPro Liga Regular"
+colorlinks: true
+linkcolor: blue
+urlcolor: red
+toccolor: gray
+---
 Transaction size cannot exceed 10,000,000 bytes (~10 MB) of affected data. It's not very intuitive to see what affected data size here means. To give a sense, the different entities that contribute to this size are
 
 * Mutation Size (For set operations these are the same, but for clears and clear ranges the mutation consists only of keys)

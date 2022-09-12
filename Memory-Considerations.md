@@ -1,3 +1,13 @@
+---
+mainfont: "Abitare Sans 100"
+sansfont: "Abitare Sans 100"
+monofont: "PragmataPro Liga Regular"
+mathfont: "PragmataPro Liga Regular"
+colorlinks: true
+linkcolor: blue
+urlcolor: red
+toccolor: gray
+---
 ### Memory Allocator
 
 Most of the memory used by FoundationDB (client or server) is allocated via a customized “fast allocator” ([flow/FastAlloc.h](https://github.com/apple/foundationdb/blob/2184f59875/flow/FastAlloc.h)), which allocates memory from the OS in large blocks and then keeps it for reuse within the process. If a transaction allocates some memory, then after the transaction commits, the memory is returned back to the "fast allocator" for next reuse. This means that from the OS perspective an FoundationDB process’s memory footprint will generally not go down.

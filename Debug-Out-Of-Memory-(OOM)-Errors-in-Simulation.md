@@ -1,3 +1,13 @@
+---
+mainfont: "Abitare Sans 100"
+sansfont: "Abitare Sans 100"
+monofont: "PragmataPro Liga Regular"
+mathfont: "PragmataPro Liga Regular"
+colorlinks: true
+linkcolor: blue
+urlcolor: red
+toccolor: gray
+---
 ### Option 1: Follow these steps to obtain heap profiles
 
 0. Install gperftools if needed (skip this step if using the development docker), e.g., `yum install -y gperftools-devel gperftools-libs gperftools ghostscript.x86_64 gv.x86_64`

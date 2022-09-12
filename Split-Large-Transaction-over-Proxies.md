@@ -1,3 +1,13 @@
+---
+mainfont: "Abitare Sans 100"
+sansfont: "Abitare Sans 100"
+monofont: "PragmataPro Liga Regular"
+mathfont: "PragmataPro Liga Regular"
+colorlinks: true
+linkcolor: blue
+urlcolor: red
+toccolor: gray
+---
 ## Introduction
 
 FoundationDB is a key-value storage database with transactional support. When a client submits a transaction, the corresponding data will be sent to a proxy. The proxy will go to the master for the version of the transaction. After versioning information is retrieved, potential read and write conflicts will be sent to the resolver. The resolver will determine if the conflicts can be resolved or reject the commit. In the case the resolution is found, the proxy will forward the key-value mutations to tLog servers, where the journals are stored and consumed by storage servers.

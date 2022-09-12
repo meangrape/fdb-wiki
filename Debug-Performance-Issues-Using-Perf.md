@@ -1,3 +1,13 @@
+---
+mainfont: "Abitare Sans 100"
+sansfont: "Abitare Sans 100"
+monofont: "PragmataPro Liga Regular"
+mathfont: "PragmataPro Liga Regular"
+colorlinks: true
+linkcolor: blue
+urlcolor: red
+toccolor: gray
+---
 `perf`: https://perf.wiki.kernel.org/index.php/Main_Page is a linux profiler which will allow you to monitor the CPU utilization of a single process. Perf is a useful tool to check whether CPU time is being spent in the appropriate places and to identify potential performance bugs (by seeing which functions are consuming the most CPU cycles).
 
 

@@ -1,3 +1,13 @@
+---
+mainfont: "Abitare Sans 100"
+sansfont: "Abitare Sans 100"
+monofont: "PragmataPro Liga Regular"
+mathfont: "PragmataPro Liga Regular"
+colorlinks: true
+linkcolor: blue
+urlcolor: red
+toccolor: gray
+---
 Cluster controller (CC) acts as the failure monitor of all the worker processes in the cluster. All the workers heart beats to the cluster controller to report their health. If the cluster controller (CC) marks a worker as failure if it doesn't receive heartbeats for a specified amount of time. This time is set using the knob WORKER_FAILURE_TIME and it's default value is 1 sec. Storage servers have a different timeout and will be explained later.
 
 When the CC detects failure of stateless or TLog worker, it triggers a recovery process by which new stateless (proxy, resolver, etc.,)  and TLog workers are recruited and a new generation is started. Storage server failures do not trigger recovery but data distribution gets triggered to move the data off the failed storage server to other storage servers and also rebalance data.

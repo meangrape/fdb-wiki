@@ -1,3 +1,13 @@
+---
+mainfont: "Abitare Sans 100"
+sansfont: "Abitare Sans 100"
+monofont: "PragmataPro Liga Regular"
+mathfont: "PragmataPro Liga Regular"
+colorlinks: true
+linkcolor: blue
+urlcolor: red
+toccolor: gray
+---
 _(This is doc based on [a forum post](https://forums.foundationdb.org/t/best-practice-of-storing-structs-should-i-pack-or-store-fields-separately/425))_
 
 This document will discuss some of the different ways to store structured data like JSON objects in FDB. Let's assume one user is about to store data like the following struct:

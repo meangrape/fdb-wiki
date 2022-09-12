@@ -1,3 +1,13 @@
+---
+mainfont: "Abitare Sans 100"
+sansfont: "Abitare Sans 100"
+monofont: "PragmataPro Liga Regular"
+mathfont: "PragmataPro Liga Regular"
+colorlinks: true
+linkcolor: blue
+urlcolor: red
+toccolor: gray
+---
 The global configuration framework is an eventually consistent configuration mechanism to efficiently make runtime changes to all clients and servers. It works by broadcasting updates made to the global configuration key space, relying on individual machines to store existing configuration in-memory.
 
 The global configuration framework provides a key-value interface to all processes in a FoundationDB cluster. The first part of this document describes how to use the global configuration framework to read and write data. The second part goes into implementation details.

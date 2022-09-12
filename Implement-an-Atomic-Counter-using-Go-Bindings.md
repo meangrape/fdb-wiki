@@ -1,3 +1,13 @@
+---
+mainfont: "Abitare Sans 100"
+sansfont: "Abitare Sans 100"
+monofont: "PragmataPro Liga Regular"
+mathfont: "PragmataPro Liga Regular"
+colorlinks: true
+linkcolor: blue
+urlcolor: red
+toccolor: gray
+---
 Based on [forum post](https://forums.foundationdb.org/t/go-foundationdb-atomic-counter/1297/2).
 
 To implement an atomic counter, we can use [atomic operations](https://apple.github.io/foundationdb/developer-guide.html#atomic-operations), more specifically the atomic_add operation.

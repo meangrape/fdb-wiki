@@ -1,3 +1,13 @@
+---
+mainfont: "Abitare Sans 100"
+sansfont: "Abitare Sans 100"
+monofont: "PragmataPro Liga Regular"
+mathfont: "PragmataPro Liga Regular"
+colorlinks: true
+linkcolor: blue
+urlcolor: red
+toccolor: gray
+---
 ## Overview
 
 Over the life of a FoundationDB cluster, you may need to move a cluster onto a new set of machines with different sizing and performance characteristics. FoundationDB allows you to do this with no downtime or loss of fault tolerance, using the following process:

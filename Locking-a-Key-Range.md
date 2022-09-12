@@ -1,3 +1,13 @@
+---
+mainfont: "Abitare Sans 100"
+sansfont: "Abitare Sans 100"
+monofont: "PragmataPro Liga Regular"
+mathfont: "PragmataPro Liga Regular"
+colorlinks: true
+linkcolor: blue
+urlcolor: red
+toccolor: gray
+---
  This document specifies a couple of ways to lock a key range. Although it needs to be mentioned that FoundationDB strongly recommends that application data modeling and access patterns should try to minimize conflicts as much as possible, the following suggestion is only for those rare scenarios.
 
 For example, consider a scenario where there is range of keys k1, k2, ... kn, and a transaction selects a key from this range arbitrarily (say kx), reads the value of kx, and then write some value back at kx. There is an additional constraint - that only one transaction could be modifying this entire range at a given time (i.e. concurrent modifications in this range, even if on different keys, are disallowed).

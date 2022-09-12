@@ -1,3 +1,13 @@
+---
+mainfont: "Abitare Sans 100"
+sansfont: "Abitare Sans 100"
+monofont: "PragmataPro Liga Regular"
+mathfont: "PragmataPro Liga Regular"
+colorlinks: true
+linkcolor: blue
+urlcolor: red
+toccolor: gray
+---
 # *Planned Features in 7.0*
 
 *Scaling* - (A.J.) - Larger clusters will make adding additional hardware easier, and will make it easier to balance users across partitions. Larger clusters also enables transactions across more data. This feature is also extremely important for external adoption, because it means a lot of use cases can fit entirely in a single cluster.

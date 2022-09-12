@@ -1,3 +1,13 @@
+---
+mainfont: "Abitare Sans 100"
+sansfont: "Abitare Sans 100"
+monofont: "PragmataPro Liga Regular"
+mathfont: "PragmataPro Liga Regular"
+colorlinks: true
+linkcolor: blue
+urlcolor: red
+toccolor: gray
+---
 When developing on FDB it may be important to run a `.cpp`/`.py`/`.java` file using the client bindings built locally (for example you added a new function to the C API and want to test it).
 
 

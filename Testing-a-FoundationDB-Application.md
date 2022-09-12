@@ -1,3 +1,13 @@
+---
+mainfont: "Abitare Sans 100"
+sansfont: "Abitare Sans 100"
+monofont: "PragmataPro Liga Regular"
+mathfont: "PragmataPro Liga Regular"
+colorlinks: true
+linkcolor: blue
+urlcolor: red
+toccolor: gray
+---
 In this article we will implement a data structure on top of a FoundationDB database. We will focus on how to test our implementation, using [pytest](https://docs.pytest.org/en/latest/). This page assumes familiarity with the [python bindings](https://apple.github.io/foundationdb/api-python.html).
 
 # Hello World #

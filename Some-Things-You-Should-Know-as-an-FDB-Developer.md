@@ -1,3 +1,13 @@
+---
+mainfont: "Abitare Sans 100"
+sansfont: "Abitare Sans 100"
+monofont: "PragmataPro Liga Regular"
+mathfont: "PragmataPro Liga Regular"
+colorlinks: true
+linkcolor: blue
+urlcolor: red
+toccolor: gray
+---
 FoundationDB project starts in 2009, when there is not a good async programming framework and memory management library. As a result, FDB invents its own, which has many nuances that may trip you if you are not aware.
 
 The following is assuming you are already familiar with [flow](https://github.com/apple/foundationdb/blob/main/flow/README.md).
