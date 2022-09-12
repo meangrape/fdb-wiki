@@ -1,3 +1,13 @@
+---
+mainfont: "Abitare Sans 100"
+sansfont: "Abitare Sans 100"
+monofont: "PragmataPro Liga Regular"
+mathfont: "PragmataPro Liga Regular"
+colorlinks: true
+linkcolor: blue
+urlcolor: red
+toccolor: gray
+---
 FoundationDB C client uses a custom *fast-allocator* to allocate memory from Operating System in large blocks, and then reuses this memory for various operations within the process. It is important to note that memory once allocated is never returned back to OS.
 
 A major chunk of allocated memory is used by ongoing transactions to cache the keys/values read and written over their lifetime of the transaction. Memory used by transactions is returned back to allocator-pool when transaction is closed, and hence, it is crucial to close transactions in a timely manner.
